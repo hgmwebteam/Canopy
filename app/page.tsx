@@ -1,30 +1,53 @@
-import WaitlistForm from "@/components/WaitlistForm";
-import { BRAND } from "@/lib/config";
+import Hero from "@/components/landing/Hero";
+import LogoIntro from "@/components/landing/LogoIntro";
+import QuickInfoBar from "@/components/landing/QuickInfoBar";
+import WaitlistBand from "@/components/landing/WaitlistBand";
+import IntentionalSection from "@/components/landing/IntentionalSection";
+import ForYouHeading from "@/components/landing/ForYouHeading";
+import ForYouGrid from "@/components/landing/ForYouGrid";
+import PricingGallery from "@/components/landing/PricingGallery";
+import TreehouseInfo from "@/components/landing/TreehouseInfo";
+import CareSection from "@/components/landing/CareSection";
+import StatsSection from "@/components/landing/StatsSection";
+import MapSection from "@/components/landing/MapSection";
+import PhotoGrid from "@/components/landing/PhotoGrid";
+import Testimonial from "@/components/landing/Testimonial";
+import PathSteps from "@/components/landing/PathSteps";
+import Footer from "@/components/landing/Footer";
 
-/**
- * Step 1 — Landing page.
- * Foundation skeleton: branded hero + working waitlist capture.
- * Full Figma build (node 16418:982, ~14 sections) lands in Milestone 2.
- */
+/** Step 1 — Landing page, sections in Figma order (node 16418:982). */
 export default function LandingPage() {
   return (
     <main className="flex flex-1 flex-col">
-      <section className="flex min-h-screen flex-col items-center justify-center bg-navy px-6 py-24 text-center text-cream">
-        <p className="mb-6 text-xs font-semibold uppercase tracking-[0.35em] text-copper">
-          Moody Moon Ridge
-        </p>
-        <h1 className="font-serif text-4xl leading-tight sm:text-5xl">
-          {BRAND.name}
-        </h1>
-        <p className="mt-4 max-w-xl font-serif text-xl italic text-cream/90">
-          {BRAND.tagline}
-        </p>
-        <p className="mt-10 text-lg font-semibold">{BRAND.waitlistHook}</p>
-        <WaitlistForm source="hero" className="mt-6 w-full max-w-md" />
-        <p className="mt-4 text-sm text-cream/70">
-          Be first in line when the six treehouses open for booking.
-        </p>
-      </section>
+      <Hero />
+      <LogoIntro />
+      <QuickInfoBar />
+      <WaitlistBand
+        heading={["Only six treehouses.", "One waitlist."]}
+        source="band-top"
+        bgImage="/images/landing/waitlist-forest-bg.png"
+      />
+      <IntentionalSection />
+      <ForYouHeading />
+      <ForYouGrid />
+      <PricingGallery />
+      <TreehouseInfo />
+      <WaitlistBand
+        heading={["Only six treehouses.", "One waitlist."]}
+        source="band-mid"
+      />
+      <CareSection />
+      <StatsSection />
+      <MapSection />
+      <PhotoGrid />
+      <Testimonial />
+      <PathSteps />
+      <WaitlistBand
+        heading={["Only six treehouses.", "Join our waitlist today!"]}
+        source="band-bottom"
+        bgImage="/images/landing/final-cta-forest-bg.png"
+      />
+      <Footer />
     </main>
   );
 }

@@ -40,6 +40,17 @@ export const waitingOn: string[] = [
 
 export const entries: LogEntry[] = [
   {
+    version: "v0.2.0",
+    date: "2026-07-15",
+    title: "Full landing page built from Figma (Milestone 2)",
+    items: [
+      "All 18 sections implemented from the Figma design: hero, logo intro, quick-info bar, three waitlist bands, “This isn't Rustic. It's intentional”, “The Canopy is for you if…” grid, pricing gallery + Private Treehouse info, care section, stats, illustrated map, photo grid, founder testimonial, “Your path to the ridge”, and footer.",
+      "Built by 8 parallel agents (one per section group), each pulling design context and assets straight from Figma; every section then adversarially verified against Figma screenshots with fixes applied (text fidelity, colors, alt text, spacing).",
+      "Responsive derived for mobile (the Figma design is desktop-only); production build passes.",
+      "Awaiting client review on localhost before deploy.",
+    ],
+  },
+  {
     version: "v0.1.3",
     date: "2026-07-15",
     title: "Project log rebuilt as a docs-style dashboard",
