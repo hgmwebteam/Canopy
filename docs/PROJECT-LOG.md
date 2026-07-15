@@ -2,6 +2,12 @@
 
 All notable updates to the Canopy funnel project, newest first. Rendered at [/log](/log).
 
+## 2026-07-15 — v0.1.1 · Moved hosting to the client's Netlify account
+
+- Site now lives on the client's own Netlify team ("The Canopy", sue@moodymoonridge.com) at https://canopy-moodymoonridge.netlify.app — deployed via access token.
+- The original agency-team copy was renamed to `canopy-mmr-staging` and can serve as a staging environment (or be deleted).
+- All environment variables (Supabase, deposit amount) copied to the new site.
+
 ## 2026-07-15 — v0.1.0 · Foundation
 
 - Scaffolded Next.js 15 (App Router, TypeScript) with Tailwind CSS v4.
