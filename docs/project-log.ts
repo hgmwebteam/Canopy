@@ -25,8 +25,8 @@ export const project = {
 
 export const milestones: Milestone[] = [
   { label: "M1 · Foundation (scaffold, Supabase, Netlify, funnel skeleton)", status: "done" },
-  { label: "M2 · Landing page build from Figma (~14 sections, responsive)", status: "active" },
-  { label: "M3 · Funnel pages + Stripe Payment Element", status: "pending" },
+  { label: "M2 · Landing page build from Figma (~14 sections, responsive)", status: "done" },
+  { label: "M3 · Funnel pages + Stripe Payment Element", status: "active" },
   { label: "M4 · GHL sync + Stripe webhook live", status: "pending" },
   { label: "M5 · QA, code review, launch prep (DNS cutover)", status: "pending" },
 ];
@@ -47,7 +47,7 @@ export const entries: LogEntry[] = [
       "All 18 sections implemented from the Figma design: hero, logo intro, quick-info bar, three waitlist bands, “This isn't Rustic. It's intentional”, “The Canopy is for you if…” grid, pricing gallery + Private Treehouse info, care section, stats, illustrated map, photo grid, founder testimonial, “Your path to the ridge”, and footer.",
       "Built by 8 parallel agents (one per section group), each pulling design context and assets straight from Figma; every section then adversarially verified against Figma screenshots with fixes applied (text fidelity, colors, alt text, spacing).",
       "Responsive derived for mobile (the Figma design is desktop-only); production build passes.",
-      "Awaiting client review on localhost before deploy.",
+      "Reviewed and deployed to production.",
     ],
   },
   {
