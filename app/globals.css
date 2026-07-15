@@ -32,3 +32,56 @@ body {
   color: var(--canopy-ink);
   font-family: var(--font-inter), system-ui, sans-serif;
 }
+
+/*
+ * /log page palette — mirrors the HGM internal docs system (Untitled UI style),
+ * intentionally separate from the Canopy brand tokens above.
+ */
+.doclog {
+  --dl-canvas: #f5f6f8;
+  --dl-card: #ffffff;
+  --dl-card-2: #f8f9fb;
+  --dl-text: #181d27;
+  --dl-text-2: #414651;
+  --dl-text-3: #535862;
+  --dl-text-4: #717680;
+  --dl-ring: #e9eaeb;
+  --dl-brand: #2a62de;
+  --dl-brand-bg: #eff4ff;
+  --dl-success: #079455;
+  --dl-success-bg: #ecfdf3;
+  --dl-warning: #dc6803;
+  --dl-warning-bg: #fffaeb;
+}
+
+.doclog[data-theme="dark"] {
+  --dl-canvas: #0c0e12;
+  --dl-card: #13161b;
+  --dl-card-2: #171a20;
+  --dl-text: #f7f7f7;
+  --dl-text-2: #cecfd2;
+  --dl-text-3: #94979c;
+  --dl-text-4: #717680;
+  --dl-ring: #22262f;
+  --dl-brand: #6a9bfa;
+  --dl-brand-bg: rgba(42, 98, 222, 0.18);
+  --dl-success: #47cd89;
+  --dl-success-bg: rgba(7, 148, 85, 0.16);
+  --dl-warning: #fdb022;
+  --dl-warning-bg: rgba(220, 104, 3, 0.16);
+}
+
+@keyframes dl-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.dl-fade {
+  animation: dl-fade-up 0.4s ease-out both;
+}

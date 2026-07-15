@@ -1,7 +1,7 @@
 # The Canopy — Moody Moon Ridge (prelaunch funnel)
 
 LaunchBoom-style prelaunch funnel rebuilt as a custom Next.js site. Four steps:
-`/` landing (waitlist) → `/reservation` (priority offer) → `/checkout` (Stripe deposit) → `/reserved` (confirmation). Plus `/log`, a noindexed changelog rendered from `docs/PROJECT-LOG.md` — **append an entry there every working session**.
+`/` landing (waitlist) → `/reservation` (priority offer) → `/checkout` (Stripe deposit) → `/reserved` (confirmation). Plus `/log`, a noindexed docs-style dashboard (HGM/Untitled UI look) rendered from `docs/project-log.ts` — **every working session: append an entry to `entries` there (and update `milestones`/`waitingOn` if changed), then commit, push to GitHub, and deploy**.
 
 ## Stack & infrastructure
 
