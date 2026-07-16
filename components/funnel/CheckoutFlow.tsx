@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import {
   Elements,
@@ -16,12 +16,15 @@ const INPUT_CLASS =
 const BUTTON_CLASS =
   "flex h-11 w-full items-center justify-center rounded-[4px] bg-copper text-[13px] font-semibold uppercase tracking-[0.08em] text-white transition hover:brightness-110 disabled:opacity-60";
 
-/** Stripe.js is injected only once a clientSecret exists — demo mode never loads it. */
+const LABEL_CLASS = "font-sans text-sm font-medium text-navy";
+
+const PUBLISHABLE_KEY = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY;
+
+/** Stripe.js loads once, only when a publishable key exists. */
 let stripePromise: Promise<StripeJs | null> | null = null;
 function getStripeJs(): Promise<StripeJs | null> {
   if (!stripePromise) {
-    const key = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY;
-    stripePromise = key ? loadStripe(key) : Promise.resolve(null);
+    stripePromise = PUBLISHABLE_KEY ? loadStripe(PUBLISHABLE_KEY) : Promise.resolve(null);
   }
   return stripePromise;
 }
@@ -37,38 +40,151 @@ const APPEARANCE = {
   },
 };
 
-function PaymentStep({ amountLabel }: { amountLabel: string }) {
+type Props = { amountLabel: string; amountCents: number };
+
+function ContactFields({
+  fullName,
+  setFullName,
+  email,
+  setEmail,
+  phone,
+  setPhone,
+}: {
+  fullName: string;
+  setFullName: (v: string) => void;
+  email: string;
+  setEmail: (v: string) => void;
+  phone: string;
+  setPhone: (v: string) => void;
+}) {
+  return (
+    <>
+      <label className="flex flex-col gap-1.5">
+        <span className={LABEL_CLASS}>Full name</span>
+        <input
+          type="text"
+          required
+          value={fullName}
+          onChange={(e) => setFullName(e.target.value)}
+          placeholder="Your full name"
+          autoComplete="name"
+          className={INPUT_CLASS}
+        />
+      </label>
+      <label className="flex flex-col gap-1.5">
+        <span className={LABEL_CLASS}>Email</span>
+        <input
+          type="email"
+          required
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="you@email.com"
+          autoComplete="email"
+          className={INPUT_CLASS}
+        />
+      </label>
+      <label className="flex flex-col gap-1.5">
+        <span className={LABEL_CLASS}>
+          Phone <span className="font-normal text-[#393939]/60">(optional)</span>
+        </span>
+        <input
+          type="tel"
+          value={phone}
+          onChange={(e) => setPhone(e.target.value)}
+          placeholder="(555) 555-5555"
+          autoComplete="tel"
+          className={INPUT_CLASS}
+        />
+      </label>
+    </>
+  );
+}
+
+function TrustRow() {
+  return (
+    <p className="text-center font-sans text-sm leading-6 text-[#393939]/70">
+      Secure checkout · Powered by Stripe · 100% refundable
+    </p>
+  );
+}
+
+/** Single-step checkout: contact fields + live Payment Element, one submit. */
+function LiveCheckoutForm({ amountLabel }: { amountLabel: string }) {
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const stripe = useStripe();
   const elements = useElements();
-  const [paying, setPaying] = useState(false);
+  const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState(searchParams.get("email") ?? "");
+  const [phone, setPhone] = useState("");
+  const [submitting, setSubmitting] = useState(false);
   const [message, setMessage] = useState("");
 
-  async function handlePay(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!stripe || !elements) return;
-    setPaying(true);
+    setSubmitting(true);
     setMessage("");
-    const { error } = await stripe.confirmPayment({
-      elements,
-      confirmParams: { return_url: `${window.location.origin}/reserved` },
-    });
-    // Only reached when confirmation fails before redirect.
-    setMessage(error.message ?? "Payment could not be completed — please try again.");
-    setPaying(false);
+    try {
+      // Validate the payment fields first (deferred-intent flow).
+      const { error: submitError } = await elements.submit();
+      if (submitError) throw new Error(submitError.message);
+
+      const res = await fetch("/api/reservations", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email,
+          fullName,
+          phone,
+          leadId: searchParams.get("lead") ?? undefined,
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error ?? "Something went wrong");
+      if (data.demo) {
+        router.push("/reserved?demo=1");
+        return;
+      }
+      if (!data.clientSecret) throw new Error("Unexpected response — please try again");
+
+      const { error } = await stripe.confirmPayment({
+        elements,
+        clientSecret: data.clientSecret,
+        confirmParams: { return_url: `${window.location.origin}/reserved` },
+      });
+      // Only reached when confirmation fails before redirect.
+      throw new Error(error.message ?? "Payment could not be completed — please try again.");
+    } catch (err) {
+      setMessage(err instanceof Error ? err.message : "Something went wrong");
+      setSubmitting(false);
+    }
   }
 
   return (
-    <form onSubmit={handlePay} className="flex flex-col gap-5">
-      <PaymentElement />
-      <button type="submit" disabled={!stripe || paying} className={BUTTON_CLASS}>
-        {paying ? "Processing…" : `Pay ${amountLabel} · Become a VIP`}
+    <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+      <ContactFields
+        {...{ fullName, setFullName, email, setEmail, phone, setPhone }}
+      />
+      <div className="mt-2 flex flex-col gap-1.5">
+        <span className={LABEL_CLASS}>Payment</span>
+        <PaymentElement />
+      </div>
+      <button
+        type="submit"
+        disabled={!stripe || submitting}
+        className={`${BUTTON_CLASS} mt-2`}
+      >
+        {submitting ? "Processing…" : `Pay ${amountLabel} · Become a VIP`}
       </button>
       {message && <p className="font-sans text-sm text-red-600">{message}</p>}
+      <TrustRow />
     </form>
   );
 }
 
-export default function CheckoutFlow({ amountLabel }: { amountLabel: string }) {
+/** Demo checkout: same layout with disabled placeholder card fields. */
+function DemoCheckoutForm({ amountLabel }: { amountLabel: string }) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [fullName, setFullName] = useState("");
@@ -76,8 +192,6 @@ export default function CheckoutFlow({ amountLabel }: { amountLabel: string }) {
   const [phone, setPhone] = useState("");
   const [status, setStatus] = useState<"idle" | "submitting" | "error">("idle");
   const [message, setMessage] = useState("");
-  const [clientSecret, setClientSecret] = useState<string | null>(null);
-  const stripeJs = useMemo(() => (clientSecret ? getStripeJs() : null), [clientSecret]);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -96,76 +210,75 @@ export default function CheckoutFlow({ amountLabel }: { amountLabel: string }) {
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error ?? "Something went wrong");
-      if (data.demo) {
-        router.push("/reserved?demo=1");
-        return;
-      }
-      if (data.clientSecret) {
-        setClientSecret(data.clientSecret);
-        setStatus("idle");
-        return;
-      }
-      throw new Error("Unexpected response — please try again");
+      router.push("/reserved?demo=1");
     } catch (err) {
       setStatus("error");
       setMessage(err instanceof Error ? err.message : "Something went wrong");
     }
   }
 
-  if (clientSecret && stripeJs) {
-    return (
-      <Elements stripe={stripeJs} options={{ clientSecret, appearance: APPEARANCE }}>
-        <PaymentStep amountLabel={amountLabel} />
-      </Elements>
-    );
-  }
-
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-      <label className="flex flex-col gap-1.5">
-        <span className="font-sans text-sm font-medium text-navy">Full name</span>
-        <input
-          type="text"
-          required
-          value={fullName}
-          onChange={(e) => setFullName(e.target.value)}
-          placeholder="Your full name"
-          autoComplete="name"
-          className={INPUT_CLASS}
-        />
-      </label>
-      <label className="flex flex-col gap-1.5">
-        <span className="font-sans text-sm font-medium text-navy">Email</span>
-        <input
-          type="email"
-          required
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder="you@email.com"
-          autoComplete="email"
-          className={INPUT_CLASS}
-        />
-      </label>
-      <label className="flex flex-col gap-1.5">
-        <span className="font-sans text-sm font-medium text-navy">
-          Phone <span className="font-normal text-[#393939]/60">(optional)</span>
-        </span>
-        <input
-          type="tel"
-          value={phone}
-          onChange={(e) => setPhone(e.target.value)}
-          placeholder="(555) 555-5555"
-          autoComplete="tel"
-          className={INPUT_CLASS}
-        />
-      </label>
-      <button type="submit" disabled={status === "submitting"} className={`${BUTTON_CLASS} mt-2`}>
+      <ContactFields
+        {...{ fullName, setFullName, email, setEmail, phone, setPhone }}
+      />
+      <div className="mt-2 flex flex-col gap-1.5">
+        <span className={LABEL_CLASS}>Payment</span>
+        <fieldset disabled className="flex flex-col gap-3 opacity-60">
+          <input
+            type="text"
+            placeholder="1234 1234 1234 1234"
+            aria-label="Card number (coming soon)"
+            className={INPUT_CLASS}
+          />
+          <div className="grid grid-cols-2 gap-3">
+            <input
+              type="text"
+              placeholder="MM / YY"
+              aria-label="Expiration date (coming soon)"
+              className={INPUT_CLASS}
+            />
+            <input
+              type="text"
+              placeholder="CVC"
+              aria-label="Security code (coming soon)"
+              className={INPUT_CLASS}
+            />
+          </div>
+        </fieldset>
+        <p className="font-sans text-sm leading-6 text-copper">
+          Secure card payment is being finalized — reserve now and we&apos;ll
+          email you to complete your {amountLabel} VIP deposit.
+        </p>
+      </div>
+      <button
+        type="submit"
+        disabled={status === "submitting"}
+        className={`${BUTTON_CLASS} mt-2`}
+      >
         {status === "submitting" ? "Reserving…" : `Become a VIP — ${amountLabel}`}
       </button>
       {status === "error" && <p className="font-sans text-sm text-red-600">{message}</p>}
-      <p className="text-center font-sans text-sm leading-6 text-[#393939]/70">
-        Secure checkout · Powered by Stripe · 100% refundable
-      </p>
+      <TrustRow />
     </form>
+  );
+}
+
+export default function CheckoutFlow({ amountLabel, amountCents }: Props) {
+  if (!PUBLISHABLE_KEY) {
+    return <DemoCheckoutForm amountLabel={amountLabel} />;
+  }
+  return (
+    <Elements
+      stripe={getStripeJs()}
+      options={{
+        mode: "payment",
+        amount: amountCents,
+        currency: "usd",
+        appearance: APPEARANCE,
+      }}
+    >
+      <LiveCheckoutForm amountLabel={amountLabel} />
+    </Elements>
   );
 }

@@ -46,7 +46,10 @@ export default function CheckoutPage() {
             {/* Details / payment */}
             <div className="rounded-2xl border border-[#e5e1db] bg-[#fcfaf8] p-6 sm:p-8">
               <Suspense fallback={null}>
-                <CheckoutFlow amountLabel={deposit} />
+                <CheckoutFlow
+                  amountLabel={deposit}
+                  amountCents={RESERVATION_AMOUNT_CENTS}
+                />
               </Suspense>
             </div>
 
