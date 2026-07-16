@@ -32,7 +32,12 @@ const slides: Slide[] = [
   },
 ];
 
+/**
+ * Mobile: square 1:1 slideshow. Desktop: Airbnb-style collage —
+ * hero image left, 2×2 grid right (slides[0] + slides[1..4]).
+ */
 export default function PricingGallery() {
+  const [hero, ...cells] = slides;
   return (
     <section className="relative overflow-hidden bg-navy-deep">
       <Image
@@ -43,7 +48,41 @@ export default function PricingGallery() {
         className="pointer-events-none select-none object-cover"
       />
       <div className="relative mx-auto max-w-[1296px] px-6 py-14 lg:pt-[107px] lg:pb-[71px]">
-        <GallerySlideshow slides={slides} />
+        {/* Mobile / tablet: slideshow */}
+        <div className="lg:hidden">
+          <GallerySlideshow slides={slides} />
+        </div>
+
+        {/* Desktop: collage */}
+        <div className="hidden gap-4 overflow-hidden rounded-2xl lg:flex">
+          <div className="relative w-[51%]">
+            <Image
+              src={hero.image}
+              alt={hero.alt}
+              fill
+              sizes="653px"
+              className="object-cover"
+              style={
+                hero.objectPosition
+                  ? { objectPosition: hero.objectPosition }
+                  : undefined
+              }
+            />
+          </div>
+          <div className="grid flex-1 grid-cols-2 gap-4">
+            {cells.map((cell) => (
+              <div key={cell.alt} className="relative aspect-[306/300]">
+                <Image
+                  src={cell.image}
+                  alt={cell.alt}
+                  fill
+                  sizes="306px"
+                  className="object-cover"
+                />
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </section>
   );
