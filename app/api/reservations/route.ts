@@ -59,7 +59,16 @@ export async function POST(req: Request) {
     currency: "usd",
     receipt_email: email,
     metadata: { reservationId: id },
+    automatic_payment_methods: { enabled: true },
   });
+  // The webhook flips status by stripe_payment_intent_id — persist it now.
+  const { error: linkError } = await supabase
+    .from("reservations")
+    .update({ stripe_payment_intent_id: intent.id })
+    .eq("id", id);
+  if (linkError) {
+    console.error("[reservations] failed to link payment intent:", linkError);
+  }
   return NextResponse.json({
     ok: true,
     reservationId: id,

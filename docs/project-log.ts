@@ -26,8 +26,8 @@ export const project = {
 export const milestones: Milestone[] = [
   { label: "M1 · Foundation (scaffold, Supabase, Netlify, funnel skeleton)", status: "done" },
   { label: "M2 · Landing page build from Figma (~14 sections, responsive)", status: "done" },
-  { label: "M3 · Funnel pages + Stripe Payment Element", status: "active" },
-  { label: "M4 · GHL sync + Stripe webhook live", status: "pending" },
+  { label: "M3 · Funnel pages + Stripe Payment Element", status: "done" },
+  { label: "M4 · GHL sync + Stripe webhook live", status: "active" },
   { label: "M5 · QA, code review, launch prep (DNS cutover)", status: "pending" },
 ];
 
@@ -39,6 +39,18 @@ export const waitingOn: string[] = [
 ];
 
 export const entries: LogEntry[] = [
+  {
+    version: "v0.3.0",
+    date: "2026-07-16",
+    title: "Funnel pages built — reservation, checkout, confirmation (Milestone 3)",
+    items: [
+      "Reservation offer page: founding-guest pitch with benefits cards, scarcity band, and refund FAQ — copy and styling derived from the landing design system (Merriweather/Inter, navy/copper/cream).",
+      "Checkout: details form + order summary card, with the full Stripe Payment Element flow coded and brand-themed (copper, 4px radii, Inter) — runs in demo mode until Stripe keys are added, then lights up automatically.",
+      "Confirmation page: celebration hero, three-step “what happens next” (mirroring the landing path-steps style), refund reassurance; handles Stripe redirect states and demo arrivals gracefully.",
+      "Reservation API now records the Stripe PaymentIntent on each reservation so the webhook can mark deposits paid.",
+      "Shared FunnelHeader across funnel steps; email + lead id flow through every step; full demo-mode funnel verified end-to-end locally.",
+    ],
+  },
   {
     version: "v0.2.0",
     date: "2026-07-15",
