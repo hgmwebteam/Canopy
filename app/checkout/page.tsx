@@ -93,6 +93,21 @@ export default function CheckoutPage() {
               </p>
             </aside>
           </div>
+
+          {/* Disclaimer — exact client-provided copy */}
+          <div className="mx-auto mt-12 max-w-[1040px] border-t border-[#e5e1db] pt-8 lg:mt-16">
+            <p className="font-sans text-xs uppercase leading-6 tracking-[3.6px] text-copper">
+              Disclaimer
+            </p>
+            <p className="mt-2 font-sans text-sm leading-6 text-[#393939]/70">
+              The Canopy at Moody Moon Ridge is still in development and the
+              final designs may change. The images shown are the latest
+              prototypes that we have, and we will update you with any changes
+              to appearance, cost, or function. The final Kickstarter price is
+              subject to change. If we do change it though, we will notify you
+              before the campaign launches.
+            </p>
+          </div>
         </div>
       </main>
       <Footer />

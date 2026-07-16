@@ -48,6 +48,7 @@ export const entries: LogEntry[] = [
       "Added imagery: dusk treehouse hero with a 50% OFF badge and an MSRP-vs-VIP price-lock strip.",
       "Checkout and confirmation aligned to VIP framing (order summary shows the crossed-out MSRP rate; buttons read “Become a VIP”).",
       "VIP price now $50 via RESERVATION_AMOUNT_CENTS (env + Netlify updated); nightly pricing centralized in lib/config.ts.",
+      "Checkout: added the development/prototype disclaimer (designs, cost, and Kickstarter price subject to change).",
     ],
   },
   {
