@@ -32,7 +32,7 @@ export const milestones: Milestone[] = [
 ];
 
 export const waitingOn: string[] = [
-  "Stripe API keys (test + live) — checkout runs in demo mode until then",
+  "Stripe payment connection — add publishable key + secret key, then verify live checkout end-to-end (webhook + test card + real $50 charge)",
   "GHL Private Integration token + Location ID — CRM sync is a no-op until then",
   "Final deposit amount (placeholder $100 via RESERVATION_AMOUNT_CENTS)",
   "Go/no-go for pointing canopy.moodymoonridge.com DNS at Netlify",
