@@ -33,12 +33,22 @@ export const milestones: Milestone[] = [
 
 export const waitingOn: string[] = [
   "Stripe payment connection — add publishable key + secret key, then verify live checkout end-to-end (webhook + test card + real $50 charge)",
-  "GHL Private Integration token + Location ID — CRM sync is a no-op until then",
+  "GHL workflows — build the tag-triggered automations (welcome flow on canopy-waitlist, abandoned-checkout recovery, VIP confirmation)",
   "Final deposit amount (placeholder $100 via RESERVATION_AMOUNT_CENTS)",
   "Go/no-go for pointing canopy.moodymoonridge.com DNS at Netlify",
 ];
 
 export const entries: LogEntry[] = [
+  {
+    version: "v0.3.2",
+    date: "2026-07-16",
+    title: "GoHighLevel connected — CRM sync is live",
+    items: [
+      "Location ID for the “Canopy at Moody Moon Ridge” sub-account (Newport, TN) wired into local + Netlify env alongside the Private Integration token.",
+      "Verified end-to-end: waitlist signup through the site created a GHL contact with tag canopy-waitlist and source canopy-hero; test contacts and rows cleaned up.",
+      "From the next deploy, every signup, checkout start, and paid deposit auto-syncs to GHL (canopy-waitlist → canopy-reservation-started → canopy-reserved).",
+    ],
+  },
   {
     version: "v0.3.1",
     date: "2026-07-16",
