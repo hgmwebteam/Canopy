@@ -1,26 +1,23 @@
-import Image from "next/image";
-
 import heroTreehouse from "@/public/images/landing/hero-treehouse.jpg";
 
 /**
- * Full-bleed hero image card (Figma node 16418:983).
- * A rounded photo card centered on the warm cream page background.
+ * Full-bleed hero video — edge to edge, 90vh on desktop, with the
+ * original hero photo as poster for instant first paint.
  */
 export default function Hero() {
   return (
-    <section className="bg-[#f3efe8]">
-      <div className="mx-auto max-w-[1273px] px-6 pt-8 pb-6 lg:pt-[52px] lg:pb-[34px]">
-        <div className="relative aspect-[3/4] w-full overflow-hidden rounded-3xl sm:aspect-[4/3] lg:aspect-[1225/775]">
-          <Image
-            src={heroTreehouse}
-            alt="Glass-gabled treehouse and lookout cabin glowing at sunrise above the forest canopy, connected by a suspension bridge"
-            fill
-            priority
-            sizes="(min-width: 1280px) 1225px, 100vw"
-            className="object-cover"
-          />
-        </div>
-      </div>
+    <section className="relative h-[60vh] w-full overflow-hidden sm:h-[75vh] lg:h-[90vh]">
+      <video
+        className="absolute inset-0 h-full w-full object-cover"
+        src="/videos/hero.mp4"
+        poster={heroTreehouse.src}
+        autoPlay
+        muted
+        loop
+        playsInline
+        preload="metadata"
+        aria-label="Glass-gabled treehouse and lookout cabin glowing at sunrise above the forest canopy, connected by a suspension bridge"
+      />
     </section>
   );
 }

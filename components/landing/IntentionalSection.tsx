@@ -1,29 +1,31 @@
-import Image from "next/image";
-
 import tactileNostalgia from "@/public/images/landing/tactile-nostalgia.jpg";
 import curatedWellness from "@/public/images/landing/curated-wellness.jpg";
 
 type FeatureRow = {
-  image: typeof tactileNostalgia;
+  /** Ambient video for the media block; poster shows until it loads. */
+  video: string;
+  poster: typeof tactileNostalgia;
   alt: string;
   title: string;
   body: string;
-  /** Figma frame ratio for the image block. */
+  /** Figma frame ratio for the media block. */
   aspect: string;
-  /** Image sits right of the text on desktop. */
+  /** Media sits right of the text on desktop. */
   imageRight?: boolean;
 };
 
 const rows: FeatureRow[] = [
   {
-    image: tactileNostalgia,
+    video: "/videos/experience-tactile-nostalgia.mp4",
+    poster: tactileNostalgia,
     alt: "Treehouse with floor-to-ceiling windows glowing at golden sunrise, sunbeams streaming through the forest",
     title: "Tactile Nostalgia & Bespoke Arrival",
     body: "Indulge in screen-free interiors featuring phonographs, vinyl records, Polaroid cameras, and wind-up clocks — a true return to presence. Your personalized experience begins even before you arrive: select your preferred library book, curated pantry provisions, and brew bar options for a seamless start.",
     aspect: "aspect-[632/483]",
   },
   {
-    image: curatedWellness,
+    video: "/videos/experience-wellness.mp4",
+    poster: curatedWellness,
     alt: "Aerial view of a treehouse and private sauna cabin connected by a suspension bridge above the forest canopy",
     title: "Curated Wellness",
     body: "Private sauna, hydrogen-infused soaking tub, and outdoor shower — a wellness circuit in every treehouse.",
@@ -61,12 +63,16 @@ export default function IntentionalSection() {
                   row.imageRight ? "lg:order-2" : ""
                 }`}
               >
-                <Image
-                  src={row.image}
-                  alt={row.alt}
-                  fill
-                  sizes="(min-width: 1024px) 624px, 100vw"
-                  className="object-cover"
+                <video
+                  className="absolute inset-0 h-full w-full object-cover"
+                  src={row.video}
+                  poster={row.poster.src}
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  preload="metadata"
+                  aria-label={row.alt}
                 />
               </div>
               <div className={row.imageRight ? "lg:order-1" : ""}>

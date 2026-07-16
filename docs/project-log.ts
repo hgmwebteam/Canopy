@@ -40,6 +40,19 @@ export const waitingOn: string[] = [
 
 export const entries: LogEntry[] = [
   {
+    version: "v0.4.0",
+    date: "2026-07-16",
+    title: "Video, slideshow, and mobile UX overhaul",
+    items: [
+      "Hero is now a full-bleed, 90vh ambient video (client footage, compressed 15MB → 3MB); “The Experience” rows play their own videos (27MB → 7.4MB, 16MB → 4.5MB) with photo posters for instant paint.",
+      "“The Canopy is for you if…” reasons are now proper cards — image, serif heading (no more italic), and body grouped in one rounded container, uniform image heights on mobile.",
+      "Pricing gallery replaced with a square 1:1 five-image slideshow (arrows, dots, swipe, gentle auto-advance).",
+      "Mid-page waitlist band flipped to a light sand tone so it stands apart from the dark sections around it.",
+      "New mobile sticky “Join the Waitlist” button with a popup form — automatically hides whenever a waitlist form or the footer is on screen.",
+      "Mobile polish: map stats now 2×2 compact tiles, photo gallery is a two-column masonry with a full-screen lightbox (swipe/arrows/captions), founder quote resized with comfortable line height.",
+    ],
+  },
+  {
     version: "v0.3.2",
     date: "2026-07-16",
     title: "GoHighLevel connected — CRM sync is live",

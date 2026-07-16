@@ -37,6 +37,9 @@ yarn-error.log*
 # supabase CLI local state
 /supabase/.temp
 
+# raw source videos (compressed web versions live in /public/videos)
+/public/HGMedia/LandingPage/
+
 # vercel
 .vercel
 

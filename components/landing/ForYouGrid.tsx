@@ -53,18 +53,23 @@ const rowTwo: Card[] = [
   },
 ];
 
+/**
+ * Card unit: image + heading + body grouped in one contained card so each
+ * reason reads as a single unit. Every image shares one aspect ratio on
+ * mobile (4/3); desktop keeps the taller 3/4 crop for the top row.
+ */
 function GridCard({
   card,
-  aspect,
+  desktopAspect,
   sizes,
 }: {
   card: Card;
-  aspect: string;
+  desktopAspect: string;
   sizes: string;
 }) {
   return (
-    <div className="flex flex-col">
-      <div className={`relative w-full overflow-hidden rounded-xl ${aspect}`}>
+    <div className="flex flex-col overflow-hidden rounded-2xl border border-[#e5e1db] bg-[#fcfaf8]">
+      <div className={`relative w-full aspect-[4/3] ${desktopAspect}`}>
         <Image
           src={card.image}
           alt={card.alt}
@@ -78,10 +83,10 @@ function GridCard({
           }
         />
       </div>
-      <div className="py-4">
-        <p className="font-sans text-xl italic leading-[30px] text-[#0d1d10]">
+      <div className="flex flex-1 flex-col gap-2 p-6">
+        <h3 className="font-serif text-[22px] leading-7 text-navy">
           {card.title}
-        </p>
+        </h3>
         <p className="font-sans text-base leading-6 text-[#393939]">
           {card.body}
         </p>
@@ -94,24 +99,24 @@ export default function ForYouGrid() {
   return (
     <section className="bg-[#eee7dd]">
       <div className="mx-auto max-w-[1296px] px-6 pt-10 pb-4">
-        <div className="grid grid-cols-1 gap-x-8 gap-y-10 md:grid-cols-3">
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-3 md:gap-8">
           {rowOne.map((card) => (
             <GridCard
               key={card.title}
               card={card}
-              aspect="aspect-[3/4]"
+              desktopAspect="md:aspect-[3/4]"
               sizes="(min-width: 1024px) 385px, (min-width: 768px) 33vw, 100vw"
             />
           ))}
         </div>
       </div>
       <div className="mx-auto max-w-[1296px] px-6 py-4 pb-10">
-        <div className="grid grid-cols-1 gap-x-[26px] gap-y-10 md:grid-cols-2">
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-[26px]">
           {rowTwo.map((card) => (
             <GridCard
               key={card.title}
               card={card}
-              aspect="aspect-[4/3]"
+              desktopAspect="md:aspect-[16/10]"
               sizes="(min-width: 1024px) 603px, (min-width: 768px) 50vw, 100vw"
             />
           ))}

@@ -57,16 +57,16 @@ export default function StatsSection() {
             ))}
           </ul>
 
-          <div className="grid w-full grid-cols-1 gap-y-[22px] overflow-hidden rounded-2xl sm:grid-cols-2 sm:gap-x-[23px] lg:max-w-[641px]">
+          <div className="grid w-full grid-cols-2 gap-3 overflow-hidden rounded-2xl sm:gap-x-[23px] sm:gap-y-[22px] lg:max-w-[641px]">
             {stats.map((stat) => (
               <div
                 key={stat.label}
-                className="flex h-[169px] flex-col items-center justify-center gap-2 bg-[#fcfaf8] px-[30px]"
+                className="flex h-[110px] flex-col items-center justify-center gap-1 bg-[#fcfaf8] px-4 sm:h-[169px] sm:gap-2 sm:px-[30px]"
               >
-                <p className="font-serif text-[35px] leading-[42px] text-navy">
+                <p className="font-serif text-[28px] leading-9 text-navy sm:text-[35px] sm:leading-[42px]">
                   {stat.value}
                 </p>
-                <p className="text-center font-sans text-base leading-6 text-copper">
+                <p className="text-center font-sans text-sm leading-5 text-copper sm:text-base sm:leading-6">
                   {stat.label}
                 </p>
               </div>

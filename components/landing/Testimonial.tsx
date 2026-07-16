@@ -38,7 +38,7 @@ export default function Testimonial() {
             </p>
             <div className="w-full px-2">
               <blockquote className="border-l-2 border-copper px-6">
-                <p className="font-serif text-[20px] italic leading-6 text-[#3d3f45]">
+                <p className="font-serif text-[17px] italic leading-[30px] text-[#3d3f45] sm:text-[20px] sm:leading-[34px]">
                   With over two decades in residential construction, I have
                   learned that the details really matter and that true
                   hospitality isn’t an accident—it’s designed. I brought that

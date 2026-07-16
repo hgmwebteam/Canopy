@@ -9,6 +9,7 @@ import PricingGallery from "@/components/landing/PricingGallery";
 import TreehouseInfo from "@/components/landing/TreehouseInfo";
 import CareSection from "@/components/landing/CareSection";
 import StatsSection from "@/components/landing/StatsSection";
+import StickyWaitlistCta from "@/components/landing/StickyWaitlistCta";
 import MapSection from "@/components/landing/MapSection";
 import PhotoGrid from "@/components/landing/PhotoGrid";
 import Testimonial from "@/components/landing/Testimonial";
@@ -35,6 +36,7 @@ export default function LandingPage() {
       <WaitlistBand
         heading={["Only six treehouses.", "One waitlist."]}
         source="band-mid"
+        tone="light"
       />
       <CareSection />
       <StatsSection />
@@ -48,6 +50,7 @@ export default function LandingPage() {
         bgImage="/images/landing/final-cta-forest-bg.png"
       />
       <Footer />
+      <StickyWaitlistCta />
     </main>
   );
 }

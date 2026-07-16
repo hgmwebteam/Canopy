@@ -54,7 +54,7 @@ export default function WaitlistForm({
       aria-label="Email address"
       className={
         variant === "stacked"
-          ? "h-11 w-full rounded-[4px] bg-white px-4 text-[15px] text-ink placeholder:text-ink/50 focus:outline-none focus:ring-2 focus:ring-copper"
+          ? "h-11 w-full rounded-[4px] border border-navy/20 bg-white px-4 text-[15px] text-ink placeholder:text-ink/50 focus:outline-none focus:ring-2 focus:ring-copper"
           : "flex-1 rounded-md border border-navy/20 bg-white px-4 py-3 text-ink placeholder:text-ink/50 focus:outline-none focus:ring-2 focus:ring-copper"
       }
     />
