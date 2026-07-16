@@ -47,6 +47,7 @@ export const entries: LogEntry[] = [
       "Location ID for the “Canopy at Moody Moon Ridge” sub-account (Newport, TN) wired into local + Netlify env alongside the Private Integration token.",
       "Verified end-to-end: waitlist signup through the site created a GHL contact with tag canopy-waitlist and source canopy-hero; test contacts and rows cleaned up.",
       "From the next deploy, every signup, checkout start, and paid deposit auto-syncs to GHL (canopy-waitlist → canopy-reservation-started → canopy-reserved).",
+      "Email program delivered for team review: “Email Setup on GHL” guide (with Mailchimp comparison), 3 workflow build specs, and 6 branded HTML email templates (docs/emails/).",
     ],
   },
   {
