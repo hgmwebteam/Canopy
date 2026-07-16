@@ -18,3 +18,8 @@ export const BRAND = {
   tagline: "Luxury Treehouses for Quiet Connection",
   waitlistHook: "Only six treehouses. One waitlist.",
 } as const;
+
+export const SOCIAL = {
+  facebookGroup: "https://www.facebook.com/groups/25643725155245385/",
+  instagram: "https://www.instagram.com/canopymoodymoonridge/",
+} as const;

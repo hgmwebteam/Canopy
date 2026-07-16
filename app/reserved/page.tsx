@@ -5,6 +5,8 @@ import Link from "next/link";
 
 import Footer from "@/components/landing/Footer";
 import ReservedNotice from "@/components/funnel/ReservedNotice";
+import SocialLinks from "@/components/funnel/SocialLinks";
+import SuccessAnimation from "@/components/funnel/SuccessAnimation";
 import { PRICING, RESERVATION_AMOUNT_CENTS } from "@/lib/config";
 import finalCtaForestBg from "@/public/images/landing/final-cta-forest-bg.png";
 
@@ -65,6 +67,7 @@ export default function ReservedPage() {
         />
         <div className="relative mx-auto max-w-[1296px] px-6 py-24 lg:py-32">
           <div className="mx-auto flex max-w-[634px] flex-col items-center gap-4 text-center">
+            <SuccessAnimation />
             <p className="font-sans text-xs uppercase leading-6 tracking-[3.6px] text-copper">
               VIP status confirmed
             </p>
@@ -122,7 +125,29 @@ export default function ReservedPage() {
         </div>
       </section>
 
-      {/* 3 — Reassurance band */}
+      {/* 3 — Community band */}
+      <section className="bg-navy">
+        <div className="mx-auto max-w-[1296px] px-6 py-16 lg:py-20">
+          <div className="mx-auto flex max-w-[634px] flex-col items-center gap-4 text-center">
+            <p className="font-sans text-xs uppercase leading-6 tracking-[3.6px] text-copper">
+              Follow the build
+            </p>
+            <h2 className="font-serif text-[28px] leading-9 text-cream sm:text-[35px] sm:leading-[42px]">
+              Watch the ridge come to life
+            </h2>
+            <p className="font-sans text-base leading-6 text-cream">
+              Join our private Facebook group and follow along on Instagram
+              for build updates, first looks inside the treehouses, and news
+              from the ridge before anyone else.
+            </p>
+            <div className="mt-2">
+              <SocialLinks tone="dark" />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 4 — Reassurance band */}
       <section className="border-t border-[#e5e1db] bg-[#f3efe8]">
         <div className="mx-auto max-w-[1296px] px-6 py-16 lg:py-20">
           <div className="mx-auto flex max-w-[634px] flex-col items-center gap-6 text-center">

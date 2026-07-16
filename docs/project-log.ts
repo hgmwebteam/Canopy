@@ -49,6 +49,8 @@ export const entries: LogEntry[] = [
       "Checkout and confirmation aligned to VIP framing (order summary shows the crossed-out MSRP rate; buttons read “Become a VIP”).",
       "VIP price now $50 via RESERVATION_AMOUNT_CENTS (env + Netlify updated); nightly pricing centralized in lib/config.ts.",
       "Checkout: added the development/prototype disclaimer (designs, cost, and Kickstarter price subject to change).",
+      "Checkout: payment fields now render inline on the page (real Stripe Payment Element when keys are set; placeholder card fields in demo mode).",
+      "Confirmation page: added Facebook group + Instagram icon links (“Watch the ridge come to life” community band) and the client's success Lottie animation in the hero.",
     ],
   },
   {
