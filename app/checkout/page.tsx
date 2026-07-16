@@ -5,7 +5,7 @@ import Image from "next/image";
 import FunnelHeader from "@/components/funnel/FunnelHeader";
 import Footer from "@/components/landing/Footer";
 import CheckoutFlow from "@/components/funnel/CheckoutFlow";
-import { RESERVATION_AMOUNT_CENTS } from "@/lib/config";
+import { PRICING, RESERVATION_AMOUNT_CENTS } from "@/lib/config";
 import heroTreehouse from "@/public/images/landing/hero-treehouse.jpg";
 
 export const metadata: Metadata = {
@@ -35,11 +35,10 @@ export default function CheckoutPage() {
               Secure your spot
             </p>
             <h1 className="font-serif text-[28px] leading-9 text-navy sm:text-[35px] sm:leading-[42px]">
-              Complete your reservation
+              Complete your VIP upgrade
             </h1>
             <p className="p-2 font-sans text-base leading-6 text-[#393939]">
-              A fully refundable {deposit} deposit holds your place in line —
-              first choice of opening dates, at founding-guest rates.
+              {`Your ${deposit} VIP Spot locks in 50% OFF — $${PRICING.vipPerNight} per night instead of $${PRICING.msrpPerNight.toLocaleString("en-US")} MSRP — and puts you first in line to choose your dates.`}
             </p>
           </div>
 
@@ -63,17 +62,22 @@ export default function CheckoutPage() {
                 />
               </div>
               <h2 className="mt-5 font-serif text-2xl leading-[29px] text-navy">
-                Priority Reservation
+                VIP Spot — 50% OFF locked in
               </h2>
               <p className="mt-1 font-sans text-base leading-6 text-[#393939]">
-                The Canopy · founding-guest place in line
+                The Canopy Treehouse · first in line to choose your dates
               </p>
               <dl className="mt-5 border-t border-[#e5e1db]">
                 <div className="flex items-center justify-between border-b border-[#e5e1db] py-4">
                   <dt className="font-sans text-base leading-6 text-navy">
-                    Refundable deposit
+                    Your rate at launch
                   </dt>
-                  <dd className="font-sans text-base leading-6 text-navy">{deposit}</dd>
+                  <dd className="font-sans text-base leading-6 text-navy">
+                    <span className="text-navy/50 line-through">
+                      ${PRICING.msrpPerNight.toLocaleString("en-US")}
+                    </span>{" "}
+                    ${PRICING.vipPerNight}/night
+                  </dd>
                 </div>
                 <div className="flex items-center justify-between border-b border-[#e5e1db] py-4">
                   <dt className="font-sans text-base font-semibold leading-6 text-navy">
@@ -85,8 +89,7 @@ export default function CheckoutPage() {
                 </div>
               </dl>
               <p className="mt-4 font-sans text-sm leading-6 text-[#393939]/70">
-                Fully refundable any time before opening — and applied in full
-                toward your stay when booking opens.
+                Fully refundable any time before launch.
               </p>
             </aside>
           </div>

@@ -61,7 +61,7 @@ function PaymentStep({ amountLabel }: { amountLabel: string }) {
     <form onSubmit={handlePay} className="flex flex-col gap-5">
       <PaymentElement />
       <button type="submit" disabled={!stripe || paying} className={BUTTON_CLASS}>
-        {paying ? "Processing…" : `Pay ${amountLabel} · Reserve My Spot`}
+        {paying ? "Processing…" : `Pay ${amountLabel} · Become a VIP`}
       </button>
       {message && <p className="font-sans text-sm text-red-600">{message}</p>}
     </form>
@@ -160,7 +160,7 @@ export default function CheckoutFlow({ amountLabel }: { amountLabel: string }) {
         />
       </label>
       <button type="submit" disabled={status === "submitting"} className={`${BUTTON_CLASS} mt-2`}>
-        {status === "submitting" ? "Reserving…" : `Reserve My Spot — ${amountLabel}`}
+        {status === "submitting" ? "Reserving…" : `Become a VIP — ${amountLabel}`}
       </button>
       {status === "error" && <p className="font-sans text-sm text-red-600">{message}</p>}
       <p className="text-center font-sans text-sm leading-6 text-[#393939]/70">

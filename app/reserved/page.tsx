@@ -5,7 +5,7 @@ import Link from "next/link";
 
 import Footer from "@/components/landing/Footer";
 import ReservedNotice from "@/components/funnel/ReservedNotice";
-import { RESERVATION_AMOUNT_CENTS } from "@/lib/config";
+import { PRICING, RESERVATION_AMOUNT_CENTS } from "@/lib/config";
 import finalCtaForestBg from "@/public/images/landing/final-cta-forest-bg.png";
 
 export const metadata: Metadata = {
@@ -35,7 +35,7 @@ const steps: Step[] = [
   {
     number: "3",
     title: "First choice of dates",
-    body: "Choose your treehouse and your dates before the public, at the exclusive rates reserved for our first guests.",
+    body: "Choose your treehouse and your dates before the public, at your locked-in VIP rate — 50% OFF MSRP.",
   },
 ];
 
@@ -66,16 +66,15 @@ export default function ReservedPage() {
         <div className="relative mx-auto max-w-[1296px] px-6 py-24 lg:py-32">
           <div className="mx-auto flex max-w-[634px] flex-col items-center gap-4 text-center">
             <p className="font-sans text-xs uppercase leading-6 tracking-[3.6px] text-copper">
-              Reservation confirmed
+              VIP status confirmed
             </p>
             <h1 className="font-serif text-[28px] leading-9 text-cream sm:text-[35px] sm:leading-[42px]">
               Your spot on the ridge is reserved.
             </h1>
             <p className="font-sans text-base leading-6 text-cream">
-              Welcome to the Canopy Circle &mdash; the small company of guests
-              who will be first among the trees. Only six treehouses stand on
-              the ridge, and your name now waits near the front of the line.
-              Your reconnection begins here.
+              Welcome to the Canopy Circle &mdash; your 50% OFF rate is locked
+              in, and your name now waits near the front of the line. Only six
+              treehouses stand on the ridge. Your reconnection begins here.
             </p>
             <Suspense fallback={null}>
               <ReservedNotice />
@@ -128,10 +127,7 @@ export default function ReservedPage() {
         <div className="mx-auto max-w-[1296px] px-6 py-16 lg:py-20">
           <div className="mx-auto flex max-w-[634px] flex-col items-center gap-6 text-center">
             <p className="font-sans text-base leading-6 text-[#393939]">
-              Your {deposit} deposit simply holds your place in line for first
-              choice of opening dates at exclusive rates &mdash; it is fully
-              refundable at any time, for any reason, and applied in full
-              toward your stay when booking opens.
+              {`Your ${deposit} VIP Spot locks in 50% OFF our MSRP — $${PRICING.vipPerNight} per night instead of $${PRICING.msrpPerNight.toLocaleString("en-US")} — and holds your place near the front of the line. It is fully refundable at any time before launch, for any reason.`}
             </p>
             <Link
               href="/"

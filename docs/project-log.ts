@@ -40,6 +40,17 @@ export const waitingOn: string[] = [
 
 export const entries: LogEntry[] = [
   {
+    version: "v0.3.1",
+    date: "2026-07-16",
+    title: "Reservation page: exact VIP offer from LaunchBoom",
+    items: [
+      "Reservation page rebuilt with the exact live offer copy: $50 VIP upgrade locks in 50% OFF the $1,150/night MSRP → $575/night + first in line for dates.",
+      "Added imagery: dusk treehouse hero with a 50% OFF badge and an MSRP-vs-VIP price-lock strip.",
+      "Checkout and confirmation aligned to VIP framing (order summary shows the crossed-out MSRP rate; buttons read “Become a VIP”).",
+      "VIP price now $50 via RESERVATION_AMOUNT_CENTS (env + Netlify updated); nightly pricing centralized in lib/config.ts.",
+    ],
+  },
+  {
     version: "v0.3.0",
     date: "2026-07-16",
     title: "Funnel pages built — reservation, checkout, confirmation (Milestone 3)",
