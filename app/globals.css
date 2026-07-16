@@ -11,6 +11,8 @@
   --canopy-navy: #274f66;
   --canopy-navy-deep: #203747;
   --canopy-copper: #a35f33;
+  /* lighter copper for small text on navy/navy-deep — #a35f33 is only ~2.4:1 there */
+  --canopy-copper-light: #dda275;
   --canopy-cream: #f4efe8;
   --canopy-sand: #ede5d6;
   --canopy-ink: #24333c;
@@ -20,6 +22,7 @@
   --color-navy: var(--canopy-navy);
   --color-navy-deep: var(--canopy-navy-deep);
   --color-copper: var(--canopy-copper);
+  --color-copper-light: var(--canopy-copper-light);
   --color-cream: var(--canopy-cream);
   --color-sand: var(--canopy-sand);
   --color-ink: var(--canopy-ink);

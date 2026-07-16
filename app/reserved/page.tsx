@@ -68,7 +68,7 @@ export default function ReservedPage() {
         <div className="relative mx-auto max-w-[1296px] px-6 py-24 lg:py-32">
           <div className="mx-auto flex max-w-[634px] flex-col items-center gap-4 text-center">
             <SuccessAnimation />
-            <p className="font-sans text-xs uppercase leading-6 tracking-[3.6px] text-copper">
+            <p className="font-sans text-xs uppercase leading-6 tracking-[3.6px] text-copper-light">
               VIP status confirmed
             </p>
             <h1 className="font-serif text-[28px] leading-9 text-cream sm:text-[35px] sm:leading-[42px]">
@@ -129,7 +129,7 @@ export default function ReservedPage() {
       <section className="bg-navy">
         <div className="mx-auto max-w-[1296px] px-6 py-16 lg:py-20">
           <div className="mx-auto flex max-w-[634px] flex-col items-center gap-4 text-center">
-            <p className="font-sans text-xs uppercase leading-6 tracking-[3.6px] text-copper">
+            <p className="font-sans text-xs uppercase leading-6 tracking-[3.6px] text-copper-light">
               Follow the build
             </p>
             <h2 className="font-serif text-[28px] leading-9 text-cream sm:text-[35px] sm:leading-[42px]">
