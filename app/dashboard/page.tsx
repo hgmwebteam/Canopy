@@ -79,8 +79,37 @@ export default async function DashboardPage() {
           </div>
         </header>
 
-        {/* Headline numbers */}
-        <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
+        {/* Last 7 days performance (LaunchBoom-style) */}
+        <div>
+          <SectionLabel>Last 7 days performance</SectionLabel>
+          <div className="grid grid-cols-2 gap-3 lg:grid-cols-5">
+            <Stat label="Visits" value={String(d.perf7.visits)} hint="landing page sessions" />
+            <Stat
+              label="Leads"
+              value={String(d.perf7.leads)}
+              hint={d.perf7.leadCR !== null ? `conversion ${d.perf7.leadCR}%` : "needs visits data"}
+            />
+            <Stat
+              label="Checkouts started"
+              value={String(d.perf7.checkouts)}
+              hint={d.perf7.checkoutCR !== null ? `conversion ${d.perf7.checkoutCR}%` : "needs visits data"}
+            />
+            <Stat
+              label="Purchases"
+              value={String(d.perf7.paid)}
+              hint={d.perf7.paidCR !== null ? `conversion ${d.perf7.paidCR}%` : "needs visits data"}
+            />
+            <Stat
+              label="Lead → Purchase"
+              value={d.perf7.leadToPurchase !== null ? `${d.perf7.leadToPurchase}%` : "—"}
+              hint="paid VIPs per lead"
+            />
+          </div>
+        </div>
+
+        {/* All-time numbers */}
+        <SectionLabel>All time</SectionLabel>
+        <div className="-mt-4 grid grid-cols-2 gap-3 lg:grid-cols-4">
           <Stat label="Waitlist signups" value={String(d.totalLeads)} hint={`${d.last7d} in the last 7 days`} />
           <Stat label="Checkouts started" value={String(d.started + d.paid + d.refunded)} hint={d.leadToCheckoutPct !== null ? `${d.leadToCheckoutPct}% of waitlist` : undefined} />
           <Stat label="VIPs paid" value={String(d.paid)} hint={d.checkoutToPaidPct !== null ? `${d.checkoutToPaidPct}% of checkouts` : undefined} />

@@ -11,6 +11,16 @@ export type DashboardData = {
   leadToCheckoutPct: number | null;
   checkoutToPaidPct: number | null;
   last7d: number;
+  perf7: {
+    visits: number;
+    leads: number;
+    leadCR: number | null;
+    checkouts: number;
+    checkoutCR: number | null;
+    paid: number;
+    paidCR: number | null;
+    leadToPurchase: number | null;
+  };
   days: { key: string; label: string; count: number }[];
   sources: { source: string; count: number }[];
   recentLeads: { email: string; source: string | null; created_at: string }[];
@@ -28,7 +38,8 @@ export type DashboardData = {
 export async function getDashboardData(): Promise<DashboardData> {
   const supabase = getSupabaseServer();
 
-  const [leadsRes, reservationsRes, leadCountRes] = await Promise.all([
+  const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 3600 * 1000).toISOString();
+  const [leadsRes, reservationsRes, leadCountRes, visits7Res] = await Promise.all([
     supabase
       .from("leads")
       .select("email, source, created_at")
@@ -40,6 +51,11 @@ export async function getDashboardData(): Promise<DashboardData> {
       .order("created_at", { ascending: false })
       .limit(500),
     supabase.from("leads").select("id", { count: "exact", head: true }),
+    supabase
+      .from("page_views")
+      .select("id", { count: "exact", head: true })
+      .eq("path", "/")
+      .gte("created_at", sevenDaysAgo),
   ]);
 
   const leads = leadsRes.data ?? [];
@@ -86,7 +102,28 @@ export async function getDashboardData(): Promise<DashboardData> {
     .sort((a, b) => b.count - a.count);
 
   const totalCheckout = started + paid + refunded;
+
+  // Last-7-days performance (LaunchBoom-style card row).
+  const visits7 = visits7Res.count ?? 0;
+  const leads7 = leads.filter((l) => l.created_at >= sevenDaysAgo).length;
+  const res7 = reservations.filter((r) => r.created_at >= sevenDaysAgo);
+  const checkouts7 = res7.length;
+  const paid7 = res7.filter((r) => r.status === "paid").length;
+  const pct = (num: number, den: number) =>
+    den > 0 ? Math.round((num / den) * 10000) / 100 : null;
+  const perf7 = {
+    visits: visits7,
+    leads: leads7,
+    leadCR: pct(leads7, visits7),
+    checkouts: checkouts7,
+    checkoutCR: pct(checkouts7, visits7),
+    paid: paid7,
+    paidCR: pct(paid7, visits7),
+    leadToPurchase: pct(paid7, leads7),
+  };
+
   return {
+    perf7,
     totalLeads,
     started,
     paid,
