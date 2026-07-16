@@ -50,6 +50,9 @@ export const entries: LogEntry[] = [
       "Mid-page waitlist band flipped to a light sand tone so it stands apart from the dark sections around it.",
       "New mobile sticky “Join the Waitlist” button with a popup form — automatically hides whenever a waitlist form or the footer is on screen.",
       "Mobile polish: map stats now 2×2 compact tiles, photo gallery is a two-column masonry with a full-screen lightbox (swipe/arrows/captions), founder quote resized with comfortable line height.",
+      "Founder video: picture-in-picture card pops up when “Meet the Founder” scrolls into view (10s muted preview) — click to watch the full video with sound.",
+      "Performance: below-fold videos now lazy-load only when approaching the viewport (~12MB lighter initial load); hero uses an optimized instant poster under the video.",
+      "Fixes: care-section icons no longer clip on iPad; Private Treehouse banner corrected from the design's leftover “$1” to the real $50 VIP offer, redesigned as an offer card with a CTA button.",
     ],
   },
   {

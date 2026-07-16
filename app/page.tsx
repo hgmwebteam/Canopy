@@ -10,6 +10,7 @@ import TreehouseInfo from "@/components/landing/TreehouseInfo";
 import CareSection from "@/components/landing/CareSection";
 import StatsSection from "@/components/landing/StatsSection";
 import StickyWaitlistCta from "@/components/landing/StickyWaitlistCta";
+import FounderVideoPip from "@/components/landing/FounderVideoPip";
 import MapSection from "@/components/landing/MapSection";
 import PhotoGrid from "@/components/landing/PhotoGrid";
 import Testimonial from "@/components/landing/Testimonial";
@@ -51,6 +52,7 @@ export default function LandingPage() {
       />
       <Footer />
       <StickyWaitlistCta />
+      <FounderVideoPip />
     </main>
   );
 }

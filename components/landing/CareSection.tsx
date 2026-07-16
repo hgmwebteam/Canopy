@@ -43,12 +43,12 @@ export default function CareSection() {
         <div className="grid grid-cols-1 gap-x-8 gap-y-6 md:grid-cols-3">
           {columns.map((column) => (
             <div key={column.label} className="flex flex-col">
-              <div className="relative h-12 w-full overflow-hidden rounded-xl">
+              <div className="relative h-12 w-12 shrink-0 overflow-hidden">
                 <Image
                   src={column.icon}
                   alt={column.iconAlt}
                   fill
-                  sizes="(min-width: 768px) 385px, 100vw"
+                  sizes="48px"
                   className="object-cover object-left"
                 />
               </div>

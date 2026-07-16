@@ -4,7 +4,7 @@ import founderPortrait from "@/public/images/landing/founder-sue-hough.png";
 
 export default function Testimonial() {
   return (
-    <section className="border-y border-[#d6c7af] bg-[#f1ece4]">
+    <section data-founder-section className="border-y border-[#d6c7af] bg-[#f1ece4]">
       {/* Design measures 128px from section top to the circle's top edge; the photo cutout
           rises 53px above the circle inside the wrapper, so the wrapper padding is 128-53=75px. */}
       <div className="mx-auto flex max-w-[1296px] flex-col items-center px-6 pt-16 pb-12 lg:pt-[75px] lg:pb-16">

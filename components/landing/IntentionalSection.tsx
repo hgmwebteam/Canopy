@@ -1,3 +1,4 @@
+import LazyVideo from "@/components/landing/LazyVideo";
 import tactileNostalgia from "@/public/images/landing/tactile-nostalgia.jpg";
 import curatedWellness from "@/public/images/landing/curated-wellness.jpg";
 
@@ -63,16 +64,11 @@ export default function IntentionalSection() {
                   row.imageRight ? "lg:order-2" : ""
                 }`}
               >
-                <video
-                  className="absolute inset-0 h-full w-full object-cover"
+                <LazyVideo
                   src={row.video}
-                  poster={row.poster.src}
-                  autoPlay
-                  muted
-                  loop
-                  playsInline
-                  preload="metadata"
-                  aria-label={row.alt}
+                  poster={row.poster}
+                  alt={row.alt}
+                  sizes="(min-width: 1024px) 624px, 100vw"
                 />
               </div>
               <div className={row.imageRight ? "lg:order-1" : ""}>
