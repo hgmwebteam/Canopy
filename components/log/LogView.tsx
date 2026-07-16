@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import {
   entries,
+  linkGroups,
   milestones,
   project,
   waitingOn,
@@ -257,6 +258,37 @@ export default function LogView() {
         <Card delay={200} className="mb-6">
           <SectionLabel>Overview</SectionLabel>
           <p className="text-sm leading-relaxed text-(--dl-text-3)">{project.overview}</p>
+        </Card>
+
+        {/* project links */}
+        <Card delay={225} className="mb-6">
+          <SectionLabel>Project links</SectionLabel>
+          <div className="grid gap-x-8 gap-y-5 sm:grid-cols-2">
+            {linkGroups.map((group) => (
+              <div key={group.title}>
+                <p className="mb-1.5 text-xs font-semibold uppercase tracking-[0.08em] text-(--dl-text-4)">
+                  {group.title}
+                </p>
+                <ul className="flex flex-col gap-1.5">
+                  {group.links.map((link) => (
+                    <li key={link.href} className="text-sm leading-6">
+                      <a
+                        href={link.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="font-medium text-(--dl-brand) hover:underline"
+                      >
+                        {link.label}
+                      </a>
+                      {link.note && (
+                        <span className="text-(--dl-text-4)"> — {link.note}</span>
+                      )}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
         </Card>
 
         {/* milestones + waiting on */}

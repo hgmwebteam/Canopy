@@ -23,6 +23,48 @@ export const project = {
     "LaunchBoom-style prelaunch funnel rebuilt as a custom Next.js site: landing page with waitlist capture → reservation offer → Stripe deposit checkout → confirmation. Leads and reservations stored in Supabase, contacts synced to GoHighLevel at every step, hosted on the client's Netlify account. Design source is the Figma landing page; steps 2–4 derive from its design system.",
 };
 
+export type LinkGroup = {
+  title: string;
+  links: { label: string; href: string; note?: string }[];
+};
+
+export const linkGroups: LinkGroup[] = [
+  {
+    title: "Live site",
+    links: [
+      { label: "Landing page", href: "https://canopy-moodymoonridge.netlify.app" },
+      { label: "Reservation (VIP offer)", href: "https://canopy-moodymoonridge.netlify.app/reservation" },
+      { label: "Checkout", href: "https://canopy-moodymoonridge.netlify.app/checkout" },
+      { label: "Confirmation", href: "https://canopy-moodymoonridge.netlify.app/reserved" },
+      { label: "Funnel dashboard", href: "https://canopy-moodymoonridge.netlify.app/dashboard", note: "team sign-in required" },
+    ],
+  },
+  {
+    title: "Code & docs",
+    links: [
+      { label: "GitHub repo", href: "https://github.com/hgmwebteam/Canopy" },
+      { label: "Email Setup on GHL (team guide)", href: "https://claude.ai/code/artifact/88dad901-9679-427d-9eea-abc75ed82d61", note: "workflows + 6 HTML email templates" },
+    ],
+  },
+  {
+    title: "Infrastructure",
+    links: [
+      { label: "Netlify (production)", href: "https://app.netlify.com/projects/canopy-moodymoonridge", note: "client team “The Canopy”" },
+      { label: "Supabase (data)", href: "https://supabase.com/dashboard/project/wcnfprpvmnroixxetljd", note: "leads · reservations · page views" },
+      { label: "GoHighLevel sub-account", href: "https://app.gohighlevel.com/v2/location/LYaWfRDkiGY0wLhmgR3V", note: "CRM sync + email workflows" },
+    ],
+  },
+  {
+    title: "Design & social",
+    links: [
+      { label: "Figma design", href: "https://www.figma.com/design/jOrtjJkC6NHzHH7OLqG8dV/Canopy---Moody-Moon?node-id=16418-982" },
+      { label: "Original LaunchBoom funnel", href: "https://canopy.moodymoonridge.com", note: "real domain — DNS cutover pending" },
+      { label: "Facebook group", href: "https://www.facebook.com/groups/25643725155245385/" },
+      { label: "Instagram", href: "https://www.instagram.com/canopymoodymoonridge/" },
+    ],
+  },
+];
+
 export const milestones: Milestone[] = [
   { label: "M1 · Foundation (scaffold, Supabase, Netlify, funnel skeleton)", status: "done" },
   { label: "M2 · Landing page build from Figma (~14 sections, responsive)", status: "done" },
