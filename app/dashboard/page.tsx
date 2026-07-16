@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
-import { getDashboardData } from "@/lib/dashboard-data";
+import Link from "next/link";
+import { getDashboardData, RANGES, type RangeKey } from "@/lib/dashboard-data";
+import LogoutButton from "@/components/dashboard/LogoutButton";
 
 export const metadata: Metadata = {
   title: "Funnel Dashboard — The Canopy",
@@ -56,8 +58,16 @@ const statusChip: Record<string, string> = {
   refunded: "bg-(--dl-card-2) text-(--dl-text-4) ring-1 ring-(--dl-ring)",
 };
 
-export default async function DashboardPage() {
-  const d = await getDashboardData();
+export default async function DashboardPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ range?: string }>;
+}) {
+  const params = await searchParams;
+  const range: RangeKey = RANGES.some((r) => r.key === params.range)
+    ? (params.range as RangeKey)
+    : "7d";
+  const d = await getDashboardData(range);
   const maxDay = Math.max(1, ...d.days.map((x) => x.count));
   const maxSource = Math.max(1, ...d.sources.map((s) => s.count));
 
@@ -76,32 +86,51 @@ export default async function DashboardPage() {
             <span className={`rounded-full px-3 py-1 ${d.ghlLive ? "bg-(--dl-success-bg) text-(--dl-success)" : "bg-(--dl-warning-bg) text-(--dl-warning)"}`}>
               {d.ghlLive ? "✓ GHL syncing" : "⚠ GHL off"}
             </span>
+            <LogoutButton />
           </div>
         </header>
 
-        {/* Last 7 days performance (LaunchBoom-style) */}
+        {/* Range filter */}
+        <div className="flex flex-wrap items-center gap-1.5">
+          {RANGES.map((r) => (
+            <Link
+              key={r.key}
+              href={r.key === "7d" ? "/dashboard" : `/dashboard?range=${r.key}`}
+              aria-current={d.range === r.key}
+              className={`rounded-full px-3.5 py-1.5 text-xs font-semibold transition ${
+                d.range === r.key
+                  ? "bg-(--dl-brand) text-white"
+                  : "text-(--dl-text-3) ring-1 ring-(--dl-ring) hover:text-(--dl-text)"
+              }`}
+            >
+              {r.label}
+            </Link>
+          ))}
+        </div>
+
+        {/* Range performance (LaunchBoom-style) */}
         <div>
-          <SectionLabel>Last 7 days performance</SectionLabel>
+          <SectionLabel>Performance — {d.rangeLabel.toLowerCase()}</SectionLabel>
           <div className="grid grid-cols-2 gap-3 lg:grid-cols-5">
-            <Stat label="Visits" value={String(d.perf7.visits)} hint="landing page sessions" />
+            <Stat label="Visits" value={String(d.perf.visits)} hint="landing page sessions" />
             <Stat
               label="Leads"
-              value={String(d.perf7.leads)}
-              hint={d.perf7.leadCR !== null ? `conversion ${d.perf7.leadCR}%` : "needs visits data"}
+              value={String(d.perf.leads)}
+              hint={d.perf.leadCR !== null ? `conversion ${d.perf.leadCR}%` : "needs visits data"}
             />
             <Stat
               label="Checkouts started"
-              value={String(d.perf7.checkouts)}
-              hint={d.perf7.checkoutCR !== null ? `conversion ${d.perf7.checkoutCR}%` : "needs visits data"}
+              value={String(d.perf.checkouts)}
+              hint={d.perf.checkoutCR !== null ? `conversion ${d.perf.checkoutCR}%` : "needs visits data"}
             />
             <Stat
               label="Purchases"
-              value={String(d.perf7.paid)}
-              hint={d.perf7.paidCR !== null ? `conversion ${d.perf7.paidCR}%` : "needs visits data"}
+              value={String(d.perf.paid)}
+              hint={d.perf.paidCR !== null ? `conversion ${d.perf.paidCR}%` : "needs visits data"}
             />
             <Stat
               label="Lead → Purchase"
-              value={d.perf7.leadToPurchase !== null ? `${d.perf7.leadToPurchase}%` : "—"}
+              value={d.perf.leadToPurchase !== null ? `${d.perf.leadToPurchase}%` : "—"}
               hint="paid VIPs per lead"
             />
           </div>
@@ -110,7 +139,7 @@ export default async function DashboardPage() {
         {/* All-time numbers */}
         <SectionLabel>All time</SectionLabel>
         <div className="-mt-4 grid grid-cols-2 gap-3 lg:grid-cols-4">
-          <Stat label="Waitlist signups" value={String(d.totalLeads)} hint={`${d.last7d} in the last 7 days`} />
+          <Stat label="Waitlist signups" value={String(d.totalLeads)} hint={`${d.perf.leads} in ${d.rangeLabel.toLowerCase()}`} />
           <Stat label="Checkouts started" value={String(d.started + d.paid + d.refunded)} hint={d.leadToCheckoutPct !== null ? `${d.leadToCheckoutPct}% of waitlist` : undefined} />
           <Stat label="VIPs paid" value={String(d.paid)} hint={d.checkoutToPaidPct !== null ? `${d.checkoutToPaidPct}% of checkouts` : undefined} />
           <Stat label="Revenue collected" value={money(d.revenueCents)} hint={d.pendingRevenueCents > 0 ? `${money(d.pendingRevenueCents)} pending in open checkouts` : undefined} />
@@ -119,7 +148,7 @@ export default async function DashboardPage() {
         {/* Signups chart + sources */}
         <div className="grid gap-3 lg:grid-cols-[1.5fr_1fr]">
           <Card>
-            <SectionLabel>Waitlist signups — last 14 days</SectionLabel>
+            <SectionLabel>Waitlist signups — {d.chartLabel}</SectionLabel>
             <div className="mt-4 flex h-32 items-end gap-[3px] border-b border-(--dl-ring)">
               {d.days.map((day) => (
                 <div
@@ -144,7 +173,7 @@ export default async function DashboardPage() {
           </Card>
 
           <Card>
-            <SectionLabel>Signups by source</SectionLabel>
+            <SectionLabel>Signups by source — {d.rangeLabel.toLowerCase()}</SectionLabel>
             {d.sources.length === 0 ? (
               <p className="text-sm text-(--dl-text-4)">No signups yet.</p>
             ) : (

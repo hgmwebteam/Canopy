@@ -47,6 +47,8 @@ export const entries: LogEntry[] = [
       "New password-protected /dashboard (Basic Auth, customer data stays private): live waitlist count, checkouts started, VIPs paid, revenue collected + pending, conversion rates, 14-day signup chart, signups by source, and latest activity feeds — straight from Supabase on every refresh.",
       "Status badges show at a glance whether Stripe is live or in demo mode and whether GHL sync is active.",
       "LaunchBoom-style “Last 7 days performance” row: Visits, Leads, Checkouts started, Purchases (each with conversion rate vs visits) and Lead → Purchase rate — powered by new first-party visit tracking (cookieless beacon → Supabase page_views).",
+      "Date-range filter (7 / 14 / 30 days / all time) drives the performance row, signup chart, and source breakdown; all-time totals stay pinned.",
+      "Proper sign-in page at /login (styled form, cookie session, sign-out button) replaces the browser Basic-Auth popup.",
     ],
   },
   {
