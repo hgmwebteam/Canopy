@@ -1,8 +1,8 @@
 import Image from "next/image";
 
-import careBeforeYouArrive from "@/public/images/landing/care-before-you-arrive.jpg";
-import carePhoneFreeWelcome from "@/public/images/landing/care-phone-free-welcome.jpg";
-import careCanopyExperience from "@/public/images/landing/care-canopy-experience.jpg";
+import careBeforeYouArrive from "@/public/images/landing/care-icon-before-you-arrive.png";
+import carePhoneFreeWelcome from "@/public/images/landing/care-icon-phone-free-welcome.png";
+import careCanopyExperience from "@/public/images/landing/care-icon-canopy-experience.png";
 import careForestBand from "@/public/images/landing/care-forest-band.jpg";
 
 type Column = {
@@ -43,15 +43,13 @@ export default function CareSection() {
         <div className="grid grid-cols-1 gap-x-8 gap-y-6 md:grid-cols-3">
           {columns.map((column) => (
             <div key={column.label} className="flex flex-col">
-              <div className="relative h-12 w-12 shrink-0 overflow-hidden">
-                <Image
-                  src={column.icon}
-                  alt={column.iconAlt}
-                  fill
-                  sizes="48px"
-                  className="object-cover object-left"
-                />
-              </div>
+              <Image
+                src={column.icon}
+                alt={column.iconAlt}
+                width={48}
+                height={48}
+                className="h-12 w-12 shrink-0"
+              />
               <div className="flex flex-col gap-6 py-4 text-base leading-6 text-[#e7ebed]">
                 <p className="font-sans font-bold">{column.label}</p>
                 <p className="font-sans">{column.body}</p>
