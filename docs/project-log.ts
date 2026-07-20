@@ -74,7 +74,6 @@ export const milestones: Milestone[] = [
 ];
 
 export const waitingOn: string[] = [
-  "Attach canopytreehouse.com to the Netlify site (blocked from CLI — needs one manual command or the Netlify UI), then set GoDaddy DNS: A @ → 75.2.60.5, CNAME www → canopy-moodymoonridge.netlify.app",
   "Deploy to production so checkout switches from demo mode to live Stripe payments",
   "Live payment verification — a real $50 card charge + refund once the domain resolves (live keys can't use Stripe test cards)",
   "GHL workflows — build the tag-triggered automations (welcome flow on canopy-waitlist, abandoned-checkout recovery, VIP confirmation)",
@@ -89,7 +88,7 @@ export const entries: LogEntry[] = [
     items: [
       "Live Stripe keys (Moody Moon Ridge LLC) wired in: verified against the Stripe API (charges enabled), added to local env and to Netlify env as secrets. Checkout switches from demo mode to real payments on the next deploy.",
       "Stripe webhook repaired: the dashboard-created endpoint pointed at the site root with the wrong event type. It now targets canopytreehouse.com/api/stripe-webhook listening for payment_intent.succeeded, keeping the existing signing secret — successful payments will flip reservations to “paid” and tag the contact canopy-reserved in GHL automatically.",
-      "New production domain: canopytreehouse.com (GoDaddy). Netlify attach + DNS records prepared; site goes live on the domain once DNS propagates and we deploy.",
+      "Production domain is live: canopytreehouse.com attached to Netlify as the primary domain (with www alias), GoDaddy DNS pointed and already propagated — the site now answers on the real domain, HTTPS certificate auto-provisioning.",
       "Care-section icons re-cut as true square PNGs — crisp on desktop, no longer clipped on iPad.",
       "“Project links” card added to this page — live site, code, infrastructure consoles, and design/social links in one place.",
     ],
