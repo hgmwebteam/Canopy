@@ -32,11 +32,12 @@ export const linkGroups: LinkGroup[] = [
   {
     title: "Live site",
     links: [
-      { label: "Landing page", href: "https://canopy-moodymoonridge.netlify.app" },
-      { label: "Reservation (VIP offer)", href: "https://canopy-moodymoonridge.netlify.app/reservation" },
-      { label: "Checkout", href: "https://canopy-moodymoonridge.netlify.app/checkout" },
-      { label: "Confirmation", href: "https://canopy-moodymoonridge.netlify.app/reserved" },
-      { label: "Funnel dashboard", href: "https://canopy-moodymoonridge.netlify.app/dashboard", note: "team sign-in required" },
+      { label: "Landing page", href: "https://canopytreehouse.com" },
+      { label: "Reservation (VIP offer)", href: "https://canopytreehouse.com/reservation" },
+      { label: "Checkout", href: "https://canopytreehouse.com/checkout" },
+      { label: "Confirmation", href: "https://canopytreehouse.com/reserved" },
+      { label: "Funnel dashboard", href: "https://canopytreehouse.com/dashboard", note: "team sign-in required" },
+      { label: "Netlify fallback URL", href: "https://canopy-moodymoonridge.netlify.app", note: "redirects to the domain" },
     ],
   },
   {
