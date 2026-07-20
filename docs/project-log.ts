@@ -75,8 +75,7 @@ export const milestones: Milestone[] = [
 ];
 
 export const waitingOn: string[] = [
-  "Deploy to production so checkout switches from demo mode to live Stripe payments",
-  "Live payment verification — a real $50 card charge + refund once the domain resolves (live keys can't use Stripe test cards)",
+  "Live payment verification — a real $50 card charge + refund to prove checkout → webhook → paid → canopy-reserved end-to-end (live keys can't use Stripe test cards)",
   "GHL workflows — build the tag-triggered automations (welcome flow on canopy-waitlist, abandoned-checkout recovery, VIP confirmation)",
   "Confirm final deposit amount (currently $50 via RESERVATION_AMOUNT_CENTS)",
 ];
