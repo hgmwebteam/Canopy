@@ -74,13 +74,26 @@ export const milestones: Milestone[] = [
 ];
 
 export const waitingOn: string[] = [
-  "Stripe payment connection — add publishable key + secret key, then verify live checkout end-to-end (webhook + test card + real $50 charge)",
+  "Attach canopytreehouse.com to the Netlify site (blocked from CLI — needs one manual command or the Netlify UI), then set GoDaddy DNS: A @ → 75.2.60.5, CNAME www → canopy-moodymoonridge.netlify.app",
+  "Deploy to production so checkout switches from demo mode to live Stripe payments",
+  "Live payment verification — a real $50 card charge + refund once the domain resolves (live keys can't use Stripe test cards)",
   "GHL workflows — build the tag-triggered automations (welcome flow on canopy-waitlist, abandoned-checkout recovery, VIP confirmation)",
-  "Final deposit amount (placeholder $100 via RESERVATION_AMOUNT_CENTS)",
-  "Go/no-go for pointing canopy.moodymoonridge.com DNS at Netlify",
+  "Confirm final deposit amount (currently $50 via RESERVATION_AMOUNT_CENTS)",
 ];
 
 export const entries: LogEntry[] = [
+  {
+    version: "v0.6.0",
+    date: "2026-07-18",
+    title: "Live Stripe keys + canopytreehouse.com prep",
+    items: [
+      "Live Stripe keys (Moody Moon Ridge LLC) wired in: verified against the Stripe API (charges enabled), added to local env and to Netlify env as secrets. Checkout switches from demo mode to real payments on the next deploy.",
+      "Stripe webhook repaired: the dashboard-created endpoint pointed at the site root with the wrong event type. It now targets canopytreehouse.com/api/stripe-webhook listening for payment_intent.succeeded, keeping the existing signing secret — successful payments will flip reservations to “paid” and tag the contact canopy-reserved in GHL automatically.",
+      "New production domain: canopytreehouse.com (GoDaddy). Netlify attach + DNS records prepared; site goes live on the domain once DNS propagates and we deploy.",
+      "Care-section icons re-cut as true square PNGs — crisp on desktop, no longer clipped on iPad.",
+      "“Project links” card added to this page — live site, code, infrastructure consoles, and design/social links in one place.",
+    ],
+  },
   {
     version: "v0.5.0",
     date: "2026-07-16",
