@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { getUtm } from "@/lib/utm";
 
 type Props = {
   /** Which form placement captured the lead, e.g. "hero", "band-top", "footer". */
@@ -31,7 +32,7 @@ export default function WaitlistForm({
       const res = await fetch("/api/leads", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, source }),
+        body: JSON.stringify({ email, source, utm: getUtm() }),
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error ?? "Something went wrong");

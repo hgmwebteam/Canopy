@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { randomUUID } from "node:crypto";
 import { getSupabaseServer } from "@/lib/supabase";
 import { upsertGhlContact } from "@/lib/ghl";
+import { sanitizeUtm } from "@/lib/utm";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -13,7 +14,7 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "A valid email is required" }, { status: 400 });
   }
   const source = typeof body?.source === "string" ? body.source.slice(0, 100) : null;
-  const utm = body?.utm && typeof body.utm === "object" ? body.utm : null;
+  const utm = sanitizeUtm(body?.utm) ?? null;
 
   // Generate the id locally: the insert-only RLS policy has no SELECT,
   // so we can't read the row back.
@@ -39,6 +40,7 @@ export async function POST(req: Request) {
     email,
     tags: ["canopy-waitlist"],
     source: source ? `canopy-${source}` : "canopy-landing",
+    utm: utm ?? undefined,
   });
 
   return NextResponse.json({ ok: true, leadId });

@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { upsertGhlContact } from "@/lib/ghl";
+import { sanitizeUtm } from "@/lib/utm";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -29,6 +30,7 @@ export async function POST(req: Request) {
     phone: phone || undefined,
     tags: ["canopy-reservation-started"],
     source: "canopy-checkout",
+    utm: sanitizeUtm(body?.utm),
   });
 
   return NextResponse.json({ ok: true });

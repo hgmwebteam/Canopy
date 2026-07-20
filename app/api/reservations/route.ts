@@ -3,6 +3,7 @@ import { randomUUID } from "node:crypto";
 import { getSupabaseServer } from "@/lib/supabase";
 import { getStripe } from "@/lib/stripe";
 import { upsertGhlContact } from "@/lib/ghl";
+import { sanitizeUtm } from "@/lib/utm";
 import { RESERVATION_AMOUNT_CENTS } from "@/lib/config";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -46,6 +47,7 @@ export async function POST(req: Request) {
     phone: phone ?? undefined,
     tags: ["canopy-reservation-started"],
     source: "canopy-checkout",
+    utm: sanitizeUtm(body?.utm),
   });
 
   const stripe = getStripe();

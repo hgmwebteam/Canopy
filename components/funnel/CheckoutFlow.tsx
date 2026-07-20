@@ -9,6 +9,7 @@ import {
   useStripe,
 } from "@stripe/react-stripe-js";
 import { loadStripe, type Stripe as StripeJs } from "@stripe/stripe-js";
+import { getUtm } from "@/lib/utm";
 
 const INPUT_CLASS =
   "h-11 w-full rounded-[4px] border border-navy/20 bg-white px-4 text-[15px] text-ink placeholder:text-ink/50 focus:outline-none focus:ring-2 focus:ring-copper";
@@ -57,7 +58,7 @@ function useCheckoutCapture(fullName: string, email: string, phone: string) {
     const name = fullName.trim();
     const mail = email.trim().toLowerCase();
     if (!name || !EMAIL_RE.test(mail)) return;
-    const payload = JSON.stringify({ fullName: name, email: mail, phone: phone.trim() });
+    const payload = JSON.stringify({ fullName: name, email: mail, phone: phone.trim(), utm: getUtm() });
     if (payload === lastSent.current) return;
     const timer = setTimeout(() => {
       lastSent.current = payload;
@@ -169,6 +170,7 @@ function LiveCheckoutForm({ amountLabel }: { amountLabel: string }) {
           fullName,
           phone,
           leadId: searchParams.get("lead") ?? undefined,
+          utm: getUtm(),
         }),
       });
       const data = await res.json();
@@ -238,6 +240,7 @@ function DemoCheckoutForm({ amountLabel }: { amountLabel: string }) {
           fullName,
           phone,
           leadId: searchParams.get("lead") ?? undefined,
+          utm: getUtm(),
         }),
       });
       const data = await res.json();
