@@ -14,28 +14,26 @@ export type GhlContact = {
 };
 
 /**
- * The sub-account's existing UTM custom fields (Settings → Custom Fields),
- * by field ID — the upsert API silently drops key-based entries.
- * utm_content maps onto GHL's "UTM Ad" fields — its slot for the
- * ad/creative-level identifier.
+ * UTMs go to GHL as NATIVE attribution, not direct custom-field writes.
+ * The location's published "Contact Created or Changed -> Update UTMs"
+ * workflow copies native attribution into the UTM custom fields and wipes
+ * any value written there directly (API-created contacts have empty
+ * session attribution). attributionSource at contact creation becomes the
+ * contact's first attribution, which that workflow persists into the
+ * "UTM ... (First Attribution)" fields; GHL ignores it on later upserts.
  */
-const UTM_FIELD_IDS: Array<[keyof UtmParams, last: string, first: string]> = [
-  ["source", "rc0xeEIiwBTTnLZ2RFIQ", "Hf8TNR80J8PmsTciRaq2"], // contact.utm_source[_first_attribution]
-  ["medium", "7aj9jKhtMSi0JKDWUltb", "8OpsIK74QRl25bZ5rQWJ"], // contact.utm_medium[_first_attribution]
-  ["campaign", "7efs5aFWQLG15ye30q71", "F6UO4JRjRJm8tw6z5kjf"], // contact.utm_campaign[_first_attribution]
-  ["content", "OymXVsbT6mtUgGUnNZ7v", "66ZsutuKZqv9keevEkF1"], // contact.utm_ad[_first_attribution]
-];
-
-function utmCustomFields(utm?: UtmData): Array<{ id: string; field_value: string }> {
-  if (!utm) return [];
-  const fields: Array<{ id: string; field_value: string }> = [];
-  for (const [param, lastId, firstId] of UTM_FIELD_IDS) {
-    const last = utm.last?.[param];
-    if (last) fields.push({ id: lastId, field_value: last });
-    const first = utm.first?.[param];
-    if (first) fields.push({ id: firstId, field_value: first });
-  }
-  return fields;
+function utmAttribution(utm?: UtmData): Record<string, string> | undefined {
+  const touch: UtmParams | undefined = utm?.first ?? utm?.last;
+  if (!touch) return undefined;
+  const attribution: Record<string, string> = {
+    sessionSource: "Website funnel",
+    medium: "form",
+  };
+  if (touch.source) attribution.utmSource = touch.source;
+  if (touch.medium) attribution.utmMedium = touch.medium;
+  if (touch.campaign) attribution.campaign = touch.campaign;
+  if (touch.content) attribution.utmContent = touch.content;
+  return attribution;
 }
 
 /**
@@ -52,7 +50,7 @@ export async function upsertGhlContact(contact: GhlContact): Promise<void> {
     return;
   }
   const { utm, ...rest } = contact;
-  const customFields = utmCustomFields(utm);
+  const attributionSource = utmAttribution(utm);
   try {
     const res = await fetch(`${GHL_API_BASE}/contacts/upsert`, {
       method: "POST",
@@ -64,7 +62,7 @@ export async function upsertGhlContact(contact: GhlContact): Promise<void> {
       body: JSON.stringify({
         locationId,
         ...rest,
-        ...(customFields.length && { customFields }),
+        ...(attributionSource && { attributionSource }),
       }),
     });
     if (!res.ok) {
