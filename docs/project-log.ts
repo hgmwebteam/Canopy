@@ -75,7 +75,7 @@ export const milestones: Milestone[] = [
 ];
 
 export const waitingOn: string[] = [
-  "Live payment verification — a real $50 card charge + refund to prove checkout → webhook → paid → canopy-reserved end-to-end (live keys can't use Stripe test cards)",
+  "Live payment verification — Sue makes one real $50 purchase at canopytreehouse.com/checkout; we then verify Stripe → webhook → Supabase “paid” → GHL canopy-reserved end-to-end and refund the charge (live keys can't use Stripe test cards). Finishes M4.",
   "GHL workflows — drafts already exist in the sub-account (“Canopy - Waitlist Email Signup”, “Abandoned Cart Flow”, “Canopy - Reserved Email”): wire them to the canopy-waitlist / canopy-reservation-started / canopy-reserved tags and publish (specs in docs/ghl-workflows.md, HTML emails in docs/emails/)",
   "Confirm final deposit amount (currently $50 via RESERVATION_AMOUNT_CENTS)",
   "Optional: edit the “Contact Created or Changed → Update UTMs” workflow if the team also wants Last-Attribution UTM fields filled for API-created contacts",
