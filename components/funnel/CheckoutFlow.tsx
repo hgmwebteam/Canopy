@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import {
   Elements,
@@ -41,6 +41,36 @@ const APPEARANCE = {
 };
 
 type Props = { amountLabel: string; amountCents: number };
+
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+/**
+ * Fire-and-forget GHL capture: once a name + valid email are typed
+ * (phone included when present), sync the contact with the
+ * canopy-reservation-started tag — even if they never touch the card
+ * fields. Debounced past the last keystroke; re-sends only when the
+ * values change (the server upsert makes repeats harmless).
+ */
+function useCheckoutCapture(fullName: string, email: string, phone: string) {
+  const lastSent = useRef("");
+  useEffect(() => {
+    const name = fullName.trim();
+    const mail = email.trim().toLowerCase();
+    if (!name || !EMAIL_RE.test(mail)) return;
+    const payload = JSON.stringify({ fullName: name, email: mail, phone: phone.trim() });
+    if (payload === lastSent.current) return;
+    const timer = setTimeout(() => {
+      lastSent.current = payload;
+      fetch("/api/checkout-capture", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: payload,
+        keepalive: true,
+      }).catch(() => {});
+    }, 1500);
+    return () => clearTimeout(timer);
+  }, [fullName, email, phone]);
+}
 
 function ContactFields({
   fullName,
@@ -119,6 +149,7 @@ function LiveCheckoutForm({ amountLabel }: { amountLabel: string }) {
   const [phone, setPhone] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [message, setMessage] = useState("");
+  useCheckoutCapture(fullName, email, phone);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -192,6 +223,7 @@ function DemoCheckoutForm({ amountLabel }: { amountLabel: string }) {
   const [phone, setPhone] = useState("");
   const [status, setStatus] = useState<"idle" | "submitting" | "error">("idle");
   const [message, setMessage] = useState("");
+  useCheckoutCapture(fullName, email, phone);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();

@@ -90,6 +90,7 @@ export const entries: LogEntry[] = [
       "Live Stripe keys (Moody Moon Ridge LLC) wired in: verified against the Stripe API (charges enabled), added to local env and to Netlify env as secrets. Checkout switches from demo mode to real payments on the next deploy.",
       "Stripe webhook repaired: the dashboard-created endpoint pointed at the site root with the wrong event type. It now targets canopytreehouse.com/api/stripe-webhook listening for payment_intent.succeeded, keeping the existing signing secret — successful payments will flip reservations to “paid” and tag the contact canopy-reserved in GHL automatically.",
       "Production domain is live: canopytreehouse.com attached to Netlify as the primary domain, GoDaddy DNS pointed and propagated, HTTPS certificate issued — the site answers at https://canopytreehouse.com, with www and the old netlify.app URL redirecting there.",
+      "Early abandoned-checkout capture: the moment a visitor types their name + email on the checkout page (phone included when given), the contact syncs to GHL with the canopy-reservation-started tag — even if they never touch the card fields or click Pay. Recovery emails now reach every serious prospect, not just those who attempted payment.",
       "Care-section icons re-cut as true square PNGs — crisp on desktop, no longer clipped on iPad.",
       "“Project links” card added to this page — live site, code, infrastructure consoles, and design/social links in one place.",
     ],
