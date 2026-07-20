@@ -71,7 +71,7 @@ export const milestones: Milestone[] = [
   { label: "M2 · Landing page build from Figma (~14 sections, responsive)", status: "done" },
   { label: "M3 · Funnel pages + Stripe Payment Element", status: "done" },
   { label: "M4 · GHL sync + Stripe webhook live", status: "active" },
-  { label: "M5 · QA, code review, launch prep (DNS cutover)", status: "pending" },
+  { label: "M5 · QA, live payment verification, launch", status: "pending" },
 ];
 
 export const waitingOn: string[] = [
@@ -89,7 +89,7 @@ export const entries: LogEntry[] = [
     items: [
       "Live Stripe keys (Moody Moon Ridge LLC) wired in: verified against the Stripe API (charges enabled), added to local env and to Netlify env as secrets. Checkout switches from demo mode to real payments on the next deploy.",
       "Stripe webhook repaired: the dashboard-created endpoint pointed at the site root with the wrong event type. It now targets canopytreehouse.com/api/stripe-webhook listening for payment_intent.succeeded, keeping the existing signing secret — successful payments will flip reservations to “paid” and tag the contact canopy-reserved in GHL automatically.",
-      "Production domain is live: canopytreehouse.com attached to Netlify as the primary domain (with www alias), GoDaddy DNS pointed and already propagated — the site now answers on the real domain, HTTPS certificate auto-provisioning.",
+      "Production domain is live: canopytreehouse.com attached to Netlify as the primary domain, GoDaddy DNS pointed and propagated, HTTPS certificate issued — the site answers at https://canopytreehouse.com, with www and the old netlify.app URL redirecting there.",
       "Care-section icons re-cut as true square PNGs — crisp on desktop, no longer clipped on iPad.",
       "“Project links” card added to this page — live site, code, infrastructure consoles, and design/social links in one place.",
     ],
