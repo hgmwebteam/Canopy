@@ -76,21 +76,31 @@ export const milestones: Milestone[] = [
 
 export const waitingOn: string[] = [
   "Live payment verification — a real $50 card charge + refund to prove checkout → webhook → paid → canopy-reserved end-to-end (live keys can't use Stripe test cards)",
-  "GHL workflows — build the tag-triggered automations (welcome flow on canopy-waitlist, abandoned-checkout recovery, VIP confirmation)",
+  "GHL workflows — drafts already exist in the sub-account (“Canopy - Waitlist Email Signup”, “Abandoned Cart Flow”, “Canopy - Reserved Email”): wire them to the canopy-waitlist / canopy-reservation-started / canopy-reserved tags and publish (specs in docs/ghl-workflows.md, HTML emails in docs/emails/)",
   "Confirm final deposit amount (currently $50 via RESERVATION_AMOUNT_CENTS)",
+  "Optional: edit the “Contact Created or Changed → Update UTMs” workflow if the team also wants Last-Attribution UTM fields filled for API-created contacts",
 ];
 
 export const entries: LogEntry[] = [
   {
+    version: "v0.7.0",
+    date: "2026-07-20",
+    title: "Checkout is LIVE + smarter GHL capture",
+    items: [
+      "🚀 Production checkout now takes real payments at https://canopytreehouse.com/checkout — live Stripe keys deployed, demo mode retired. The dashboard badges confirm “Stripe live” and “GHL syncing”.",
+      "Early abandoned-checkout capture: the moment a visitor types their name + email on the checkout page (phone included when given), the contact syncs to GHL with the canopy-reservation-started tag — even if they never touch the card fields or click Pay. Recovery emails now reach every serious prospect, not just those who attempted payment.",
+      "UTM attribution → GHL: utm_source / utm_medium / utm_campaign / utm_content from any ad or link persist in the browser (first touch kept forever, last touch updated per visit) and ride along on every waitlist signup, checkout entry, and payment. UTMs are also stored on each lead row in Supabase.",
+      "GHL gotcha solved: the sub-account's published “Contact Created or Changed → Update UTMs” workflow recomputes UTM custom fields from native attribution and silently wipes direct API writes seconds later. Fix: UTMs are sent as GHL-native attributionSource at contact creation, so that same workflow fills the four “UTM … (First Attribution)” fields itself and the values persist (utm_content maps to “UTM Ad”). Verified end-to-end in production. Note: the “(Last Attribution)” set can only be filled by GHL's own session tracking, not the API.",
+    ],
+  },
+  {
     version: "v0.6.0",
     date: "2026-07-18",
-    title: "Live Stripe keys + canopytreehouse.com prep",
+    title: "Live Stripe keys + canopytreehouse.com",
     items: [
-      "Live Stripe keys (Moody Moon Ridge LLC) wired in: verified against the Stripe API (charges enabled), added to local env and to Netlify env as secrets. Checkout switches from demo mode to real payments on the next deploy.",
-      "Stripe webhook repaired: the dashboard-created endpoint pointed at the site root with the wrong event type. It now targets canopytreehouse.com/api/stripe-webhook listening for payment_intent.succeeded, keeping the existing signing secret — successful payments will flip reservations to “paid” and tag the contact canopy-reserved in GHL automatically.",
+      "Live Stripe keys (Moody Moon Ridge LLC) wired in: verified against the Stripe API (charges enabled), added to local env and to Netlify env as secrets.",
+      "Stripe webhook repaired: the dashboard-created endpoint pointed at the site root with the wrong event type. It now targets canopytreehouse.com/api/stripe-webhook listening for payment_intent.succeeded, keeping the existing signing secret — successful payments flip reservations to “paid” and tag the contact canopy-reserved in GHL automatically.",
       "Production domain is live: canopytreehouse.com attached to Netlify as the primary domain, GoDaddy DNS pointed and propagated, HTTPS certificate issued — the site answers at https://canopytreehouse.com, with www and the old netlify.app URL redirecting there.",
-      "Early abandoned-checkout capture: the moment a visitor types their name + email on the checkout page (phone included when given), the contact syncs to GHL with the canopy-reservation-started tag — even if they never touch the card fields or click Pay. Recovery emails now reach every serious prospect, not just those who attempted payment.",
-      "UTM attribution → GHL: utm_source / utm_medium / utm_campaign / utm_content from any ad or link persist in the browser (first touch kept forever, last touch updated per visit) and are sent to GHL as NATIVE attribution on every waitlist signup, checkout entry, and payment. The sub-account's published “Contact Created or Changed → Update UTMs” workflow then fills the four “UTM … (First Attribution)” fields — and because the values flow through GHL's own attribution engine they persist (direct custom-field writes get wiped by that same workflow, which is why the native route was required). utm_content maps to “UTM Ad”. Verified end-to-end in production.",
       "Care-section icons re-cut as true square PNGs — crisp on desktop, no longer clipped on iPad.",
       "“Project links” card added to this page — live site, code, infrastructure consoles, and design/social links in one place.",
     ],
