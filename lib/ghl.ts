@@ -49,16 +49,19 @@ export async function upsertGhlContact(contact: GhlContact): Promise<void> {
     console.warn("[ghl] GHL_API_KEY / GHL_LOCATION_ID not set — skipping contact sync");
     return;
   }
-  const { utm, ...rest } = contact;
+  // Tags go through the dedicated add-tags endpoint: passing them on the
+  // upsert body REPLACES the contact's tag list, wiping earlier funnel tags.
+  const { utm, tags, ...rest } = contact;
   const attributionSource = utmAttribution(utm);
+  const headers = {
+    Authorization: `Bearer ${token}`,
+    Version: GHL_API_VERSION,
+    "Content-Type": "application/json",
+  };
   try {
     const res = await fetch(`${GHL_API_BASE}/contacts/upsert`, {
       method: "POST",
-      headers: {
-        Authorization: `Bearer ${token}`,
-        Version: GHL_API_VERSION,
-        "Content-Type": "application/json",
-      },
+      headers,
       body: JSON.stringify({
         locationId,
         ...rest,
@@ -67,6 +70,20 @@ export async function upsertGhlContact(contact: GhlContact): Promise<void> {
     });
     if (!res.ok) {
       console.error(`[ghl] contact upsert failed: ${res.status} ${await res.text()}`);
+      return;
+    }
+    if (tags?.length) {
+      const contactId = (await res.json())?.contact?.id;
+      if (contactId) {
+        const tagRes = await fetch(`${GHL_API_BASE}/contacts/${contactId}/tags`, {
+          method: "POST",
+          headers,
+          body: JSON.stringify({ tags }),
+        });
+        if (!tagRes.ok) {
+          console.error(`[ghl] add tags failed: ${tagRes.status} ${await tagRes.text()}`);
+        }
+      }
     }
   } catch (err) {
     console.error("[ghl] contact upsert error:", err);

@@ -70,18 +70,22 @@ export const milestones: Milestone[] = [
   { label: "M1 · Foundation (scaffold, Supabase, Netlify, funnel skeleton)", status: "done" },
   { label: "M2 · Landing page build from Figma (~14 sections, responsive)", status: "done" },
   { label: "M3 · Funnel pages + Stripe Payment Element", status: "done" },
-  { label: "M4 · GHL sync + Stripe webhook live", status: "active" },
-  { label: "M5 · QA, live payment verification, launch", status: "pending" },
+  { label: "M4 · GHL sync + Stripe webhook live", status: "done" },
+  { label: "M5 · QA, live payment verification, launch", status: "done" },
 ];
 
-export const waitingOn: string[] = [
-  "Live payment verification — Sue makes one real $50 purchase at canopytreehouse.com/checkout; we then verify Stripe → webhook → Supabase “paid” → GHL canopy-reserved end-to-end and refund the charge (live keys can't use Stripe test cards). Finishes M4.",
-  "GHL workflows — drafts already exist in the sub-account (“Canopy - Waitlist Email Signup”, “Abandoned Cart Flow”, “Canopy - Reserved Email”): wire them to the canopy-waitlist / canopy-reservation-started / canopy-reserved tags and publish (specs in docs/ghl-workflows.md, HTML emails in docs/emails/)",
-  "Confirm final deposit amount (currently $50 via RESERVATION_AMOUNT_CENTS)",
-  "Optional: edit the “Contact Created or Changed → Update UTMs” workflow if the team also wants Last-Attribution UTM fields filled for API-created contacts",
-];
+export const waitingOn: string[] = [];
 
 export const entries: LogEntry[] = [
+  {
+    version: "v0.7.1",
+    date: "2026-07-21",
+    title: "M4 complete — live payment verified end-to-end",
+    items: [
+      "✅ Sue's real $50 test purchase proved the full money path in production: Stripe charge succeeded → webhook delivered → reservation flipped to “paid” in Supabase → contact tagged canopy-reserved in GHL → purchase visible on the dashboard. M4 is done.",
+      "Found + fixed during verification: GHL's upsert API replaces a contact's entire tag list instead of merging, so paying wiped the earlier funnel tags. Tags now go through GHL's dedicated add-tags endpoint and accumulate correctly (canopy-waitlist → canopy-reservation-started → canopy-reserved all stay on the contact).",
+    ],
+  },
   {
     version: "v0.7.0",
     date: "2026-07-20",
