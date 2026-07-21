@@ -74,7 +74,9 @@ export const milestones: Milestone[] = [
   { label: "M5 · QA, live payment verification, launch", status: "done" },
 ];
 
-export const waitingOn: string[] = [];
+export const waitingOn: string[] = [
+  "UTM attribution, team side: website UTMs land as native attribution and fill the “UTM … (First Attribution)” fields automatically. If Last-Attribution fields should also fill for website contacts, the team needs to edit the published “Contact Created or Changed → Update UTMs” workflow in GHL (API-created contacts have no session attribution, so that workflow currently leaves the Last fields blank).",
+];
 
 export const entries: LogEntry[] = [
   {
