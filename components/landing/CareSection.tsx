@@ -23,7 +23,7 @@ const columns: Column[] = [
     icon: carePhoneFreeWelcome,
     iconAlt: "Copper line icon of a phone crossed out",
     label: "A PHONE-FREE WELCOME",
-    body: "We gently encourage you to set your phone aside. A record player fills the treehouse with music. A digital camera is yours to stay moments. The weather forecast arrives on paper - and if rain is on the way, we'll tuck in everything you need to enjoy it.",
+    body: "We gently encourage you to set your phone aside. A record player fills the treehouse with music. A Polaroid camera is yours to stay moments. The weather forecast arrives on paper - and if rain is on the way, we'll tuck in everything you need to enjoy it.",
   },
   {
     icon: careCanopyExperience,

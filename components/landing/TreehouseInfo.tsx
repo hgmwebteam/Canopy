@@ -23,7 +23,7 @@ export default function TreehouseInfo() {
           </div>
           <div className="flex items-baseline gap-4 whitespace-nowrap">
             <span className="font-serif text-[25px] font-bold leading-[29px] text-[#e7ebed] line-through opacity-[0.46]">
-              ${PRICING.msrpPerNight.toLocaleString("en-US")}
+              ${PRICING.nightlyRatePerNight.toLocaleString("en-US")}
             </span>
             <span className="font-serif text-[29px] font-bold leading-[35px] text-[#e7ebed]">
               ${PRICING.vipPerNight}
@@ -43,7 +43,7 @@ export default function TreehouseInfo() {
                 {`Pay just ${vipPrice} today — stay for half price when we open.`}
               </p>
               <p className="mt-3 font-sans text-base leading-7 text-[#b9c4cc]">
-                {`Regular rate $${PRICING.msrpPerNight.toLocaleString("en-US")}/night · your VIP rate $${PRICING.vipPerNight}/night at The Canopy Treehouse. Plus, you'll get first pick of dates.`}
+                {`Nightly Rate $${PRICING.nightlyRatePerNight.toLocaleString("en-US")} · your VIP rate $${PRICING.vipPerNight}/night at The Canopy Treehouse. Plus, you'll get first pick of dates.`}
               </p>
             </div>
             <div className="flex w-full shrink-0 flex-col gap-2.5 lg:w-[300px]">

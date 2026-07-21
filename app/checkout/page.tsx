@@ -38,7 +38,7 @@ export default function CheckoutPage() {
               Complete your VIP upgrade
             </h1>
             <p className="p-2 font-sans text-base leading-6 text-[#393939]">
-              {`Your ${deposit} VIP Spot locks in 50% OFF — $${PRICING.vipPerNight} per night instead of $${PRICING.msrpPerNight.toLocaleString("en-US")} MSRP — and puts you first in line to choose your dates.`}
+              {`Your ${deposit} VIP Spot locks in 50% OFF — $${PRICING.vipPerNight} per night instead of our $${PRICING.nightlyRatePerNight.toLocaleString("en-US")} Nightly Rate — and puts you first in line to choose your dates.`}
             </p>
           </div>
 
@@ -77,7 +77,7 @@ export default function CheckoutPage() {
                   </dt>
                   <dd className="font-sans text-base leading-6 text-navy">
                     <span className="text-navy/50 line-through">
-                      ${PRICING.msrpPerNight.toLocaleString("en-US")}
+                      ${PRICING.nightlyRatePerNight.toLocaleString("en-US")}
                     </span>{" "}
                     ${PRICING.vipPerNight}/night
                   </dd>

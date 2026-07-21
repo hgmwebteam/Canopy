@@ -5,7 +5,7 @@ export const RESERVATION_AMOUNT_CENTS = Number(
 
 /** VIP offer economics (whole dollars) — source: canopy.moodymoonridge.com/reservation. */
 export const PRICING = {
-  msrpPerNight: 1150,
+  nightlyRatePerNight: 1150,
   vipPerNight: 575,
   discountLabel: "50% OFF",
 } as const;

@@ -30,10 +30,10 @@ export default function LandingPage() {
         bgImage="/images/landing/waitlist-forest-bg.png"
       />
       <IntentionalSection />
-      <ForYouHeading />
-      <ForYouGrid />
       <PricingGallery />
       <TreehouseInfo />
+      <ForYouHeading />
+      <ForYouGrid />
       <WaitlistBand
         heading={["Only six treehouses.", "One waitlist."]}
         source="band-mid"

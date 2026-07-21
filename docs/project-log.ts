@@ -18,7 +18,7 @@ export type Milestone = {
 export const project = {
   name: "The Canopy",
   client: "Moody Moon Ridge",
-  liveUrl: "https://canopy-moodymoonridge.netlify.app",
+  liveUrl: "https://canopytreehouse.com",
   overview:
     "LaunchBoom-style prelaunch funnel rebuilt as a custom Next.js site: landing page with waitlist capture → reservation offer → Stripe deposit checkout → confirmation. Leads and reservations stored in Supabase, contacts synced to GoHighLevel at every step, hosted on the client's Netlify account. Design source is the Figma landing page; steps 2–4 derive from its design system.",
 };
@@ -79,6 +79,17 @@ export const waitingOn: string[] = [
 ];
 
 export const entries: LogEntry[] = [
+  {
+    version: "v0.7.2",
+    date: "2026-07-21",
+    title: "Client copy feedback round",
+    items: [
+      "“Digital camera” is now “Polaroid camera” in the care section (matching the Polaroid mention in the experience section).",
+      "All “MSRP” wording replaced with “Nightly Rate” across the landing page, reservation offer, checkout summary, and confirmation page — including the price-comparison strips.",
+      "VIP sign-up section moved up the landing page: the treehouse gallery + VIP offer card now sit right after the experience section, before “The Canopy is for you if…”.",
+      "Project log header link now points to canopytreehouse.com.",
+    ],
+  },
   {
     version: "v0.7.1",
     date: "2026-07-21",

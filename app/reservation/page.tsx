@@ -23,7 +23,7 @@ const CTA_CLASS =
 
 /**
  * Step 2 — VIP upgrade offer (exact content from the live LaunchBoom page:
- * $50 VIP Spot locks in 50% OFF the $1,150 MSRP → $575/night + first
+ * $50 VIP Spot locks in 50% OFF the $1,150 Nightly Rate → $575/night + first
  * choice of dates). Propagates email + lead params forward to /checkout.
  */
 export default async function ReservationPage({
@@ -46,20 +46,20 @@ export default async function ReservationPage({
     currency: "USD",
     minimumFractionDigits: 0,
   });
-  const msrp = `$${PRICING.msrpPerNight.toLocaleString("en-US")}`;
+  const nightlyRate = `$${PRICING.nightlyRatePerNight.toLocaleString("en-US")}`;
 
   // Exact copy from canopy.moodymoonridge.com/reservation — single strings so
   // no JSX expression boundaries can swallow whitespace.
   const offerSubhead = `Upgrade to VIP status for ${vipPrice} today and lock in 50% OFF your stay when we launch!`;
-  const offerBody = `By purchasing your ${vipPrice} VIP Spot today — you’ll lock in 50% OFF our MSRP of ${msrp} per night and only pay $${PRICING.vipPerNight} per night for The Canopy Treehouse. You’ll also be one of the first in line to choose your dates!`;
+  const offerBody = `By purchasing your ${vipPrice} VIP Spot today — you’ll lock in 50% OFF our Nightly Rate of ${nightlyRate} and only pay $${PRICING.vipPerNight} per night for The Canopy Treehouse. You’ll also be one of the first in line to choose your dates!`;
 
   const benefits = [
     {
       numeral: "01",
       label: "50% OFF LOCKED IN",
-      body: `Lock in 50% OFF our MSRP of $${PRICING.msrpPerNight.toLocaleString(
+      body: `Lock in 50% OFF our Nightly Rate of $${PRICING.nightlyRatePerNight.toLocaleString(
         "en-US"
-      )} per night — you'll only pay $${PRICING.vipPerNight} per night for The Canopy Treehouse.`,
+      )} — you'll only pay $${PRICING.vipPerNight} per night for The Canopy Treehouse.`,
     },
     {
       numeral: "02",
@@ -76,9 +76,9 @@ export default async function ReservationPage({
   const faqs = [
     {
       question: `What do I get for ${vipPrice}?`,
-      answer: `VIP status: 50% OFF our MSRP of $${PRICING.msrpPerNight.toLocaleString(
+      answer: `VIP status: 50% OFF our Nightly Rate of $${PRICING.nightlyRatePerNight.toLocaleString(
         "en-US"
-      )} per night locked in for your stay ($${PRICING.vipPerNight}/night), plus first choice of dates when booking opens.`,
+      )} locked in for your stay ($${PRICING.vipPerNight}/night), plus first choice of dates when booking opens.`,
     },
     {
       question: "Is my VIP Spot refundable?",
@@ -139,10 +139,10 @@ export default async function ReservationPage({
                 <div className="mt-4 flex items-center justify-between rounded-2xl border border-[#e5e1db] bg-[#fcfaf8] px-6 py-5">
                   <div>
                     <p className="font-sans text-xs uppercase leading-6 tracking-[3.6px] text-copper">
-                      MSRP
+                      Nightly Rate
                     </p>
                     <p className="font-serif text-2xl leading-[29px] text-navy/50 line-through">
-                      ${PRICING.msrpPerNight.toLocaleString("en-US")}
+                      ${PRICING.nightlyRatePerNight.toLocaleString("en-US")}
                       <span className="font-sans text-sm">/night</span>
                     </p>
                   </div>
@@ -208,7 +208,7 @@ export default async function ReservationPage({
                 Very few VIP spots.
               </h2>
               <p className="mt-4 font-sans text-base leading-6 text-cream">
-                {`Become a VIP today to lock in your 50% OFF discount — $${PRICING.vipPerNight} per night instead of ${msrp} — and be one of the first in line to choose your dates.`}
+                {`Become a VIP today to lock in your 50% OFF discount — $${PRICING.vipPerNight} per night instead of ${nightlyRate} — and be one of the first in line to choose your dates.`}
               </p>
             </div>
             <div className="flex w-full max-w-[463px] shrink-0 flex-col gap-3.5">

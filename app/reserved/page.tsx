@@ -37,7 +37,7 @@ const steps: Step[] = [
   {
     number: "3",
     title: "First choice of dates",
-    body: "Choose your treehouse and your dates before the public, at your locked-in VIP rate — 50% OFF MSRP.",
+    body: "Choose your treehouse and your dates before the public, at your locked-in VIP rate — 50% OFF our Nightly Rate.",
   },
 ];
 
@@ -152,7 +152,7 @@ export default function ReservedPage() {
         <div className="mx-auto max-w-[1296px] px-6 py-16 lg:py-20">
           <div className="mx-auto flex max-w-[634px] flex-col items-center gap-6 text-center">
             <p className="font-sans text-base leading-6 text-[#393939]">
-              {`Your ${deposit} VIP Spot locks in 50% OFF our MSRP — $${PRICING.vipPerNight} per night instead of $${PRICING.msrpPerNight.toLocaleString("en-US")} — and holds your place near the front of the line. It is fully refundable at any time before launch, for any reason.`}
+              {`Your ${deposit} VIP Spot locks in 50% OFF our Nightly Rate — $${PRICING.vipPerNight} per night instead of $${PRICING.nightlyRatePerNight.toLocaleString("en-US")} — and holds your place near the front of the line. It is fully refundable at any time before launch, for any reason.`}
             </p>
             <Link
               href="/"
